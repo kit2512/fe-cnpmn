@@ -1,13 +1,18 @@
 import 'package:fe_cnpmn/data/repositories/employee_repository.dart';
 import 'package:fe_cnpmn/dependency_injection.dart';
+import 'package:fe_cnpmn/enums/user_role_enum.dart';
+import 'package:fe_cnpmn/pages/employee_details/employee_details_page.dart';
+import 'package:fe_cnpmn/pages/employees_page/add_employees_dialog.dart';
 import 'package:fe_cnpmn/pages/employees_page/cubit/employees_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
+import 'package:intl/intl.dart';
 
 class EmployeesPage extends StatelessWidget {
-  static const String routeName = 'employees';
-
   const EmployeesPage({super.key});
+
+  static const String routeName = 'employees';
 
   MaterialPageRoute<void> route() => MaterialPageRoute(
         builder: (context) => const EmployeesPage(),
@@ -15,19 +20,145 @@ class EmployeesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocProvider<EmployeesCubit>(
-    create: (context) => EmployeesCubit(
-      employeeRepository: getIt<EmployeeRepository>(),
-    ),
-    child: const _EmployeesPageView(),
-  );
+        create: (context) => EmployeesCubit(
+          employeeRepository: getIt<EmployeeRepository>(),
+        )..getEmployees(),
+        child: const _EmployeesPageView(),
+      );
 }
 
 class _EmployeesPageView extends StatelessWidget {
-  const _EmployeesPageView({super.key});
+  const _EmployeesPageView();
 
   @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: const Text('Manage Employees'),
+          actions: [
+            TextButton.icon(
+              onPressed: () => showDialog<bool?>(
+                context: context,
+                builder: (context) => const AddEmployeeDialog(),
+              ).then((value) {
+                if (value == true) {
+                  context.read<EmployeesCubit>().getEmployees();
+                }
+              }),
+              icon: const Icon(
+                Icons.add_rounded,
+                color: Colors.white,
+              ),
+              label: const Text(
+                'Add',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            TextButton.icon(
+              onPressed: () => context.read<EmployeesCubit>().getEmployees(refresh: true),
+              label: const Text(
+                'Refresh',
+                style: TextStyle(color: Colors.white),
+              ),
+              icon: const Icon(
+                Icons.refresh,
+                color: Colors.white,
+              ),
+            )
+          ],
+        ),
+        body: BlocBuilder<EmployeesCubit, EmployeeState>(
+          builder: (context, state) {
+            if (state.status.isFailure) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Unable to get employees'),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    ElevatedButton(
+                      onPressed: context.read<EmployeesCubit>().getEmployees,
+                      child: const Text('Refresh'),
+                    )
+                  ],
+                ),
+              );
+            }
+            if (state.status.isInProgress) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (state.employees.isEmpty) {
+              return const Center(
+                child: Text('No employee, please create one'),
+              );
+            }
+            return SizedBox(
+              width: double.infinity,
+              child: DataTable(
+                showCheckboxColumn: false,
+                showBottomBorder: true,
+                headingRowColor: MaterialStatePropertyAll<Color>(Colors.blue[200]!),
+                columns: const [
+                  DataColumn(
+                    label: Text('ID'),
+                  ),
+                  DataColumn(
+                    label: Text('Username'),
+                  ),
+                  DataColumn(
+                    label: Text('First name'),
+                  ),
+                  DataColumn(
+                    label: Text('Last name'),
+                  ),
+                  DataColumn(
+                    label: Text('Role'),
+                  ),
+                  DataColumn(
+                    label: Text('Date created'),
+                  ),
+                ],
+                rows: state.employees
+                    .map(
+                      (emp) => DataRow(
+                        onSelectChanged: (_) => Navigator.of(context).push(
+                          EmployeeDetailsPage.route(
+                            id: emp.id,
+                          ),
+                        ),
+                        cells: [
+                          DataCell(
+                            Text(emp.id.toString()),
+                          ),
+                          DataCell(
+                            Text(emp.user.username),
+                          ),
+                          DataCell(
+                            Text(emp.user.firstName),
+                          ),
+                          DataCell(
+                            Text(emp.user.lastName),
+                          ),
+                          DataCell(
+                            Text(emp.user.role.translationName),
+                          ),
+                          DataCell(
+                            Text(
+                              DateFormat('dd-MM-yyyy').format(
+                                emp.user.dateCreated,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                    .toList(),
+              ),
+            );
+          },
+        ),
+      );
 }
-

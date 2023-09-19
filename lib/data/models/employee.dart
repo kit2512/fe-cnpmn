@@ -10,14 +10,14 @@ class Employee {
   Employee({
     required this.id,
     required this.userId,
-    required this.userInfo,
+    required this.user,
     required this.checkinHistory,
     required this.allowedRooms,
   });
 
   final int id;
   final int userId;
-  final UserInfo userInfo;
+  final UserInfo user;
   final List<CheckinHistory> checkinHistory;
   final List<Room> allowedRooms;
 

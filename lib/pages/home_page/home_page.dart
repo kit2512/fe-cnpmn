@@ -1,9 +1,8 @@
+import 'package:fe_cnpmn/enums/tab_enum.dart';
 import 'package:fe_cnpmn/pages/employees_page/employees_page.dart';
 import 'package:fe_cnpmn/pages/rfid_machines_page/rfid_machines_page.dart';
 import 'package:fe_cnpmn/pages/rooms_page/rooms_pages.dart';
 import 'package:flutter/material.dart';
-
-import 'package:fe_cnpmn/enums/tab_enum.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -23,10 +22,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      appBar: AppBar(
-        title: const Text('HRM App'),
-      ),
-      body: const IndexedStack(
+      body: IndexedStack(
+        index: _currentTab.index,
         children: [
           EmployeesPage(),
           RfidMachinePage(),

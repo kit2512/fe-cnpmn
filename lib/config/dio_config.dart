@@ -5,10 +5,11 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 class DioClient {
   DioClient() {
     _dio.options = BaseOptions(
-      baseUrl: URL.baseURL,
+      baseUrl: const String.fromEnvironment('API_HOST', defaultValue: 'http://0.0.0.0/'),
       connectTimeout: const Duration(milliseconds: 15000),
       receiveTimeout: const Duration(milliseconds: 15000),
       responseType: ResponseType.json,
+      contentType: Headers.jsonContentType,
     );
 
     // _dio.interceptors.add(

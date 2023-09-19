@@ -10,7 +10,7 @@ UserInfo _$UserInfoFromJson(Map<String, dynamic> json) => UserInfo(
       id: json['id'] as int,
       firstName: json['first_name'] as String,
       lastName: json['last_name'] as String,
-      dateCreated: json['date_created'] as String,
+      dateCreated: DateTime.parse(json['date_created'] as String),
       username: json['username'] as String,
       role: $enumDecode(_$UserRoleEnumMap, json['role']),
     );
@@ -19,7 +19,7 @@ Map<String, dynamic> _$UserInfoToJson(UserInfo instance) => <String, dynamic>{
       'id': instance.id,
       'first_name': instance.firstName,
       'last_name': instance.lastName,
-      'date_created': instance.dateCreated,
+      'date_created': instance.dateCreated.toIso8601String(),
       'username': instance.username,
       'role': _$UserRoleEnumMap[instance.role]!,
     };
