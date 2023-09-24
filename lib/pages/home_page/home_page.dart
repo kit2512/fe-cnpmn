@@ -24,10 +24,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) => Scaffold(
       body: IndexedStack(
         index: _currentTab.index,
-        children: [
+        children: const [
           EmployeesPage(),
           RfidMachinePage(),
-          RoomPage(),
+          RoomsPage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

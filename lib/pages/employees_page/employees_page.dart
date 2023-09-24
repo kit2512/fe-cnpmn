@@ -19,10 +19,8 @@ class EmployeesPage extends StatelessWidget {
       );
 
   @override
-  Widget build(BuildContext context) => BlocProvider<EmployeesCubit>(
-        create: (context) => EmployeesCubit(
-          employeeRepository: getIt<EmployeeRepository>(),
-        )..getEmployees(),
+  Widget build(BuildContext context) => BlocProvider<EmployeesCubit>.value(
+        value: getIt<EmployeesCubit>()..getEmployees(),
         child: const _EmployeesPageView(),
       );
 }

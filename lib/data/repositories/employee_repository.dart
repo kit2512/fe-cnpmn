@@ -80,4 +80,5 @@ class EmployeeRepository {
       return Left(NetworkFailure(const NetworkException.unexpectedError()));
     }
   }
+
 }

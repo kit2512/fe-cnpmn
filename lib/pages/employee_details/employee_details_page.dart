@@ -24,6 +24,7 @@ class EmployeeDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocConsumer<EmployeeDetailsCubit, EmployeeDetailsState>(
+        listenWhen: (prev, current) => current.detailsStatus != prev.deleteStatus,
         listener: (context, state) {
           if (state.deleteStatus.isSuccess) {
             getIt<EmployeesCubit>().getEmployees(refresh: true);

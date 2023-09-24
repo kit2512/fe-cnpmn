@@ -2,8 +2,8 @@ import 'package:fe_cnpmn/dependency_injection.dart';
 import 'package:fe_cnpmn/pages/home_page/home_page.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  setupDependencies();
+void main() async {
+  await setupDependencies();
   runApp(const App());
 }
 

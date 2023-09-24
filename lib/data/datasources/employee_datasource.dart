@@ -53,7 +53,7 @@ class EmployeeDataSource {
   Future<bool> deleteEmployee({required int id}) async {
     final Response<Map<String, dynamic>> response = await dio.sendRequest.delete(
       '/employee/delete',
-      data: {'id': id},
+      queryParameters: {'employee_id': id},
     );
     return response.data!['success'] as bool;
   }
