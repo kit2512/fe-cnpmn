@@ -25,4 +25,48 @@ class RoomRepository {
       return Left(NetworkFailure(const NetworkException.unexpectedError()));
     }
   }
+
+  Future<Either<Failure, Room>> createRoom({required String name}) async {
+    try {
+      final result = await roomDatasource.createRoom(
+        name: name,
+      );
+      return Right(result);
+    } on DioException catch (e) {
+      final exception = NetworkException.getDioException(e);
+      return Left(NetworkFailure(exception));
+    } catch (_) {
+      return Left(NetworkFailure(const NetworkException.unexpectedError()));
+    }
+  }
+
+  Future<Either<Failure, bool>> assignEmployee({
+    required int roomId,
+    required List<int> employeeIds,
+  }) async {
+    try {
+      final result = await roomDatasource.assignEmployee(
+        roomId: roomId,
+        employeeIds: employeeIds,
+      );
+      return Right(result);
+    } on DioException catch (e) {
+      final exception = NetworkException.getDioException(e);
+      return Left(NetworkFailure(exception));
+    } catch (_) {
+      return Left(NetworkFailure(const NetworkException.unexpectedError()));
+    }
+  }
+
+// Future<Either<Failure, Room>> getRoomDetails(int id) async {
+//   try {
+//     final result = await roomDatasource.getRoomDetails(id);
+//     return Right(result);
+//   } on DioException catch (e) {
+//     final exception = NetworkException.getDioException(e);
+//     return Left(NetworkFailure(exception));
+//   } catch (_) {
+//     return Left(NetworkFailure(const NetworkException.unexpectedError()));
+//   }
+// }
 }

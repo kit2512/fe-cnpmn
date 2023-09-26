@@ -4,6 +4,8 @@ import 'package:fe_cnpmn/pages/rfid_machines_page/rfid_machines_page.dart';
 import 'package:fe_cnpmn/pages/rooms_page/rooms_pages.dart';
 import 'package:flutter/material.dart';
 
+import '../cards_page/cards_page.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -22,25 +24,31 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      body: IndexedStack(
-        index: _currentTab.index,
-        children: const [
-          EmployeesPage(),
-          RfidMachinePage(),
-          RoomsPage(),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentTab.index,
-        onTap: (index) => setTab(TabEnum.values[index]),
-        items: TabEnum.values
-            .map(
-              (tab) => BottomNavigationBarItem(
-                icon: Icon(tab.icon),
-                label: tab.translationName,
-              ),
-            )
-            .toList(),
-      ),
-    );
+        body: IndexedStack(
+          index: _currentTab.index,
+          children: const [
+            EmployeesPage(),
+            RfidMachinePage(),
+            RoomsPage(),
+            CardsPage(),
+          ],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          unselectedItemColor: Colors.grey,
+          selectedItemColor: Colors.blue,
+          currentIndex: _currentTab.index,
+          onTap: (index) => setTab(TabEnum.values[index]),
+          items: TabEnum.values
+              .map(
+                (tab) => BottomNavigationBarItem(
+                  icon: Icon(
+                    tab.icon,
+                    color: _currentTab == tab ? Colors.blue : Colors.grey,
+                  ),
+                  label: tab.translationName,
+                ),
+              )
+              .toList(),
+        ),
+      );
 }

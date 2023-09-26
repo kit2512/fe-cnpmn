@@ -7,8 +7,9 @@ part of 'rfid_machine.dart';
 // **************************************************************************
 
 RfidMachine _$RfidMachineFromJson(Map<String, dynamic> json) => RfidMachine(
-      id: json['id'] as String,
+      id: json['id'] as int,
       roomId: json['room_id'] as int,
+      dateCreated: DateTime.parse(json['date_created'] as String),
       room: json['room'] == null
           ? null
           : Room.fromJson(json['room'] as Map<String, dynamic>),
@@ -23,4 +24,5 @@ Map<String, dynamic> _$RfidMachineToJson(RfidMachine instance) =>
       'room_id': instance.roomId,
       'room': instance.room,
       'checkin_history': instance.checkinHistory,
+      'date_created': instance.dateCreated.toIso8601String(),
     };

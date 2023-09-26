@@ -1,7 +1,14 @@
+import 'package:another_flushbar/flushbar.dart';
+import 'package:fe_cnpmn/data/models/room.dart';
 import 'package:fe_cnpmn/data/repositories/employee_repository.dart';
+import 'package:fe_cnpmn/data/repositories/rooms_repository.dart';
 import 'package:fe_cnpmn/dependency_injection.dart';
+import 'package:fe_cnpmn/helpers/exception_helper.dart';
 import 'package:fe_cnpmn/pages/employee_details/blocs/employee_details_bloc/employee_details_cubit.dart';
+import 'package:fe_cnpmn/pages/employee_details/rooms_view.dart';
 import 'package:fe_cnpmn/pages/employees_page/cubit/employees_cubit.dart';
+import 'package:fe_cnpmn/pages/room_details/room_details_page.dart';
+import 'package:fe_cnpmn/pages/widgets/checkin_history_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
@@ -78,7 +85,6 @@ class _EmployeeDetailsView extends StatelessWidget {
                 children: [
                   const CircleAvatar(
                     radius: 60,
-                    backgroundColor: Colors.green,
                     child: Icon(
                       Icons.person,
                       color: Colors.white,
@@ -207,6 +213,46 @@ class _EmployeeDetailsView extends StatelessWidget {
                   ),
                 ],
               ),
+              const SizedBox(
+                height: 12,
+              ),
+              Expanded(
+                child: DefaultTabController(
+                  length: 2,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const TabBar(
+                        isScrollable: true,
+                        tabs: [
+                          Tab(
+                            text: 'Checkin history',
+                          ),
+                          Tab(
+                            text: 'Allowed rooms',
+                          ),
+                        ],
+                        unselectedLabelColor: Colors.grey,
+                        labelColor: Colors.blue,
+                      ),
+                      Expanded(
+                        child: TabBarView(
+                          children: [
+                            CheckinHistoryListView(
+                              employeeId: state.id,
+                              showEmployeeId: false,
+                              showCardId: false,
+                            ),
+                            RoomsView(
+                              employeeId: state.id!,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
             ],
           ),
         ),

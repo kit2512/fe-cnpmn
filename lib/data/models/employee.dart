@@ -23,5 +23,6 @@ class Employee {
 
   factory Employee.fromJson(Map<String, dynamic> json) => _$EmployeeFromJson(json);
 
+
   Map<String, dynamic> toJson() => _$EmployeeToJson(this);
 }

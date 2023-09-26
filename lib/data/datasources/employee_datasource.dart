@@ -13,14 +13,9 @@ class EmployeeDataSource {
   Future<List<Employee>> getEmployees({
     int? roomId,
   }) async {
-    final Response<List<dynamic>> response = await dio.sendRequest.get(
-      'employees',
-      data: roomId != null
-          ? {
-              'room_id': roomId,
-            }
-          : null,
-    );
+    final Response<List<dynamic>> response = await dio.sendRequest.get('employees', queryParameters: {
+      if (roomId != null) 'room_id': roomId,
+    });
     return response.data!.map((e) => Employee.fromJson(e as Map<String, dynamic>)).toList(
           growable: false,
         );
@@ -50,11 +45,27 @@ class EmployeeDataSource {
     return Employee.fromJson(response.data!);
   }
 
-  Future<bool> deleteEmployee({required int id}) async {
+  Future<bool> deleteEmployee({
+    required int id,
+  }) async {
     final Response<Map<String, dynamic>> response = await dio.sendRequest.delete(
       '/employee/delete',
       queryParameters: {'employee_id': id},
     );
     return response.data!['success'] as bool;
+  }
+
+  Future<bool> assignRooms({
+    required int employeeId,
+    required List<int> roomIds,
+  }) async {
+    final Response<dynamic> response = await dio.sendRequest.post(
+      '/employee/assign_rooms',
+      data: {
+        'employee_id': employeeId,
+        'room_ids': roomIds,
+      },
+    );
+    return true;
   }
 }

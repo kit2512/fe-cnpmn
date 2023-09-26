@@ -15,9 +15,11 @@ class EmployeeRepository {
 
   final EmployeeDataSource employeeDatasource;
 
-  Future<Either<Failure, List<Employee>>> getEmployees() async {
+  Future<Either<Failure, List<Employee>>> getEmployees({
+    int? roomId,
+  }) async {
     try {
-      final result = await employeeDatasource.getEmployees();
+      final result = await employeeDatasource.getEmployees(roomId: roomId);
       return Right(result);
     } on DioException catch (e) {
       final exception = NetworkException.getDioException(e);
@@ -60,9 +62,11 @@ class EmployeeRepository {
       );
       return Right(result);
     } on DioException catch (e) {
+      rethrow;
       final exception = NetworkException.getDioException(e);
       return Left(NetworkFailure(exception));
     } catch (_) {
+      rethrow;
       return Left(NetworkFailure(const NetworkException.unexpectedError()));
     }
   }
@@ -81,4 +85,21 @@ class EmployeeRepository {
     }
   }
 
+  Future<Either<Failure, bool>> assignRooms({
+    required int employeeId,
+    required List<int> roomIds,
+  }) async {
+    try {
+      final result = await employeeDatasource.assignRooms(
+        employeeId: employeeId,
+        roomIds: roomIds,
+      );
+      return Right(result);
+    } on DioException catch (e) {
+      final exception = NetworkException.getDioException(e);
+      return Left(NetworkFailure(exception));
+    } catch (_) {
+      return Left(NetworkFailure(const NetworkException.unexpectedError()));
+    }
+  }
 }

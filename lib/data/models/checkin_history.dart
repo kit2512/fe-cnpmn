@@ -11,18 +11,21 @@ class CheckinHistory {
     required this.roomId,
     required this.employeeId,
     required this.dateCreated,
+    required this.cardId,
     this.room
   });
 
   factory CheckinHistory.fromJson(Map<String, dynamic> json) => _$CheckinHistoryFromJson(json);
 
   final int id;
-  final String rfidMachineId;
+  final int rfidMachineId;
   final DateTime dateCreated;
   final int roomId;
   final int employeeId;
 
   final Room? room;
+
+  final String cardId;
 
 
   Map<String, dynamic> toJson() => _$CheckinHistoryToJson(this);

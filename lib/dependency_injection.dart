@@ -1,8 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:fe_cnpmn/config/dio_config.dart';
+import 'package:fe_cnpmn/data/datasources/checkin_datasource.dart';
 import 'package:fe_cnpmn/data/datasources/employee_datasource.dart';
+import 'package:fe_cnpmn/data/datasources/rfid_datasource.dart';
 import 'package:fe_cnpmn/data/datasources/room_datasource.dart';
+import 'package:fe_cnpmn/data/repositories/checkin_history_repository.dart';
 import 'package:fe_cnpmn/data/repositories/employee_repository.dart';
+import 'package:fe_cnpmn/data/repositories/rfid_repository.dart';
 import 'package:fe_cnpmn/data/repositories/rooms_repository.dart';
 import 'package:fe_cnpmn/pages/employees_page/cubit/employees_cubit.dart';
 import 'package:fe_cnpmn/pages/rooms_page/cubit/rooms_cubit/rooms_cubit.dart';
@@ -20,8 +24,23 @@ Future<void> setupDependencies() async {
         dio: getIt<DioClient>(),
       ),
     )
+    ..registerLazySingleton<RfidDatasource>(
+      () => RfidDatasource(
+        dioClient: getIt<DioClient>(),
+      ),
+    )
     ..registerLazySingleton<RoomDatasource>(
       () => RoomDatasource(dioClient: getIt<DioClient>()),
+    )
+    ..registerLazySingleton<CheckinDatasource>(
+      () => CheckinDatasource(
+        dioClient: getIt<DioClient>(),
+      ),
+    )
+    ..registerLazySingleton<RfidRepository>(
+      () => RfidRepository(
+        rfidDatasource: getIt<RfidDatasource>(),
+      ),
     )
     ..registerLazySingleton<EmployeeRepository>(
       () => EmployeeRepository(
@@ -36,6 +55,11 @@ Future<void> setupDependencies() async {
     ..registerLazySingleton<EmployeesCubit>(
       () => EmployeesCubit(
         employeeRepository: getIt<EmployeeRepository>(),
+      ),
+    )
+    ..registerLazySingleton<CheckinRepository>(
+      () => CheckinRepository(
+        checkinDatasource: getIt<CheckinDatasource>(),
       ),
     )
     ..registerLazySingleton<RoomsCubit>(

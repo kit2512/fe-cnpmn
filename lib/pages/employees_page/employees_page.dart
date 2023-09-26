@@ -1,4 +1,3 @@
-import 'package:fe_cnpmn/data/repositories/employee_repository.dart';
 import 'package:fe_cnpmn/dependency_injection.dart';
 import 'package:fe_cnpmn/enums/user_role_enum.dart';
 import 'package:fe_cnpmn/pages/employee_details/employee_details_page.dart';

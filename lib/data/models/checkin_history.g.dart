@@ -9,10 +9,11 @@ part of 'checkin_history.dart';
 CheckinHistory _$CheckinHistoryFromJson(Map<String, dynamic> json) =>
     CheckinHistory(
       id: json['id'] as int,
-      rfidMachineId: json['rfid_machine_id'] as String,
+      rfidMachineId: json['rfid_machine_id'] as int,
       roomId: json['room_id'] as int,
       employeeId: json['employee_id'] as int,
       dateCreated: DateTime.parse(json['date_created'] as String),
+      cardId: json['card_id'] as String,
       room: json['room'] == null
           ? null
           : Room.fromJson(json['room'] as Map<String, dynamic>),
@@ -26,4 +27,5 @@ Map<String, dynamic> _$CheckinHistoryToJson(CheckinHistory instance) =>
       'room_id': instance.roomId,
       'employee_id': instance.employeeId,
       'room': instance.room,
+      'card_id': instance.cardId,
     };

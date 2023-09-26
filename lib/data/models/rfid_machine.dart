@@ -9,14 +9,16 @@ class RfidMachine {
   const RfidMachine({
     required this.id,
     required this.roomId,
+    required this.dateCreated,
     this.room,
     this.checkinHistory,
   });
 
-  final String id;
+  final int id;
   final int roomId;
   final Room? room;
   final List<CheckinHistory>? checkinHistory;
+  final DateTime dateCreated;
 
   factory RfidMachine.fromJson(Map<String, dynamic> json) => _$RfidMachineFromJson(json);
 

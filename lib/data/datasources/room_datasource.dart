@@ -22,4 +22,26 @@ class RoomDatasource {
         )
         .toList(growable: false);
   }
+
+  Future<Room> createRoom({required String name}) async {
+    final Response<Map<String, dynamic>> response = await dioClient.sendRequest.post(
+      '/room/create',
+      data: {'name': name},
+    );
+    return Room.fromJson(response.data!);
+  }
+
+  Future<bool> assignEmployee({
+    required int roomId,
+    required List<int> employeeIds,
+  }) async {
+    final Response<dynamic> response = await dioClient.sendRequest.post(
+      'room/assign_employees',
+      data: {
+        'room_id': roomId,
+        'employee_ids': employeeIds,
+      },
+    );
+    return true;
+  }
 }
