@@ -16,14 +16,14 @@ class CheckinRepository {
     int? employeeId,
     String? cardId,
     int? roomId,
-    int? rfidMachineId,
+    int? rfidId,
   }) async {
     try {
       final result = await checkinDatasource.getCheckinHistory(
         employeeId: employeeId,
         roomId: roomId,
         cardId: cardId,
-        rfidMachineId: rfidMachineId,
+        rfidId: rfidId,
       );
       return Right(result);
     } on DioException catch (e) {

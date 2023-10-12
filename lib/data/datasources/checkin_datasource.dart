@@ -11,13 +11,13 @@ class CheckinDatasource {
 
   Future<List<CheckinHistory>> getCheckinHistory({
     int? employeeId,
-    int? rfidMachineId,
+    int? rfidId,
     int? roomId,
     String? cardId,
   }) async {
     final data = <String, dynamic>{
       if (employeeId != null) 'employee_id': employeeId,
-      if (rfidMachineId != null) 'rfid_machine_id': rfidMachineId,
+      if (rfidId != null) 'rfid_id': rfidId,
       if (roomId != null) 'room_id': roomId,
       if (cardId != null) 'card_id': cardId,
     };

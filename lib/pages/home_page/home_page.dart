@@ -1,7 +1,7 @@
 import 'package:fe_cnpmn/enums/tab_enum.dart';
 import 'package:fe_cnpmn/pages/employees_page/employees_page.dart';
-import 'package:fe_cnpmn/pages/rfid_machines_page/rfid_machines_page.dart';
 import 'package:fe_cnpmn/pages/rooms_page/rooms_pages.dart';
+import 'package:fe_cnpmn/pages/widgets/rfid_machine_list.dart';
 import 'package:flutter/material.dart';
 
 import '../cards_page/cards_page.dart';
@@ -28,7 +28,12 @@ class _HomePageState extends State<HomePage> {
           index: _currentTab.index,
           children: const [
             EmployeesPage(),
-            RfidMachinePage(),
+            RfidMachineListView(
+              showAppBar: true,
+              showRefreshInTable: false,
+              enableOnTap: true,
+              showHeadingColor: true,
+            ),
             RoomsPage(),
             CardsPage(),
           ],

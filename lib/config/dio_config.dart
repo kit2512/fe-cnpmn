@@ -5,7 +5,8 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 class DioClient {
   DioClient() {
     _dio.options = BaseOptions(
-      baseUrl: const String.fromEnvironment('API_HOST', defaultValue: 'http://0.0.0.0/'),
+      baseUrl: const String.fromEnvironment('API_HOST', defaultValue: 'http://3.110.176.138/'),
+      // baseUrl: const String.fromEnvironment('API_HOST', defaultValue: 'http://0.0.0.0/'),
       connectTimeout: const Duration(milliseconds: 15000),
       receiveTimeout: const Duration(milliseconds: 15000),
       responseType: ResponseType.json,
@@ -19,7 +20,7 @@ class DioClient {
     //         final accessToken = await localDataSource.getAccessToken();
     //         options.headers['Authorization'] = 'Bearer $accessToken';
     //       }
-    //       if (locale != null) {
+    //       if (locale != null) {»
     //         options.headers['Accept-Language'] = locale!.languageCode;
     //       }
     //       return handler.next(options);

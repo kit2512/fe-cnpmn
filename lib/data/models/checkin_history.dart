@@ -11,7 +11,7 @@ class CheckinHistory {
     required this.roomId,
     required this.employeeId,
     required this.dateCreated,
-    required this.cardId,
+    this.cardId,
     this.room
   });
 
@@ -25,7 +25,7 @@ class CheckinHistory {
 
   final Room? room;
 
-  final String cardId;
+  final String? cardId;
 
 
   Map<String, dynamic> toJson() => _$CheckinHistoryToJson(this);

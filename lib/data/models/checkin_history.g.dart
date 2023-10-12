@@ -13,7 +13,7 @@ CheckinHistory _$CheckinHistoryFromJson(Map<String, dynamic> json) =>
       roomId: json['room_id'] as int,
       employeeId: json['employee_id'] as int,
       dateCreated: DateTime.parse(json['date_created'] as String),
-      cardId: json['card_id'] as String,
+      cardId: json['card_id'] as String?,
       room: json['room'] == null
           ? null
           : Room.fromJson(json['room'] as Map<String, dynamic>),

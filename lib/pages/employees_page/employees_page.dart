@@ -50,7 +50,7 @@ class _EmployeesPageView extends StatelessWidget {
                 style: TextStyle(color: Colors.white),
               ),
             ),
-            TextButton.icon(
+            ElevatedButton.icon(
               onPressed: () => context.read<EmployeesCubit>().getEmployees(refresh: true),
               label: const Text(
                 'Refresh',
@@ -60,7 +60,12 @@ class _EmployeesPageView extends StatelessWidget {
                 Icons.refresh,
                 color: Colors.white,
               ),
-            )
+            ),
+            ElevatedButton.icon(
+              onPressed: () => Navigator.of(context).pushReplacementNamed('/login'),
+              icon: Icon(Icons.logout_rounded),
+              label: Text('Log out'),
+            ),
           ],
         ),
         body: BlocBuilder<EmployeesCubit, EmployeeState>(

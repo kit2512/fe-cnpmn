@@ -14,7 +14,7 @@ class NetworkException with _$NetworkException {
 
   const factory NetworkException.unauthorizedRequest(String reason) = UnauthorizedRequest;
 
-  const factory NetworkException.badRequest() = BadRequest;
+  const factory NetworkException.badRequest(String message) = BadRequest;
 
   const factory NetworkException.notFound(String reason) = NotFound;
 
@@ -54,6 +54,11 @@ class NetworkException with _$NetworkException {
     final int statusCode = response?.statusCode ?? 0;
     switch (statusCode) {
       case 400:
+        return NetworkException.badRequest(
+          (response?.data as Map<String, dynamic>)['detail'] as String? ??
+              errorModel?.errors?.first.detail ??
+              'Bad request',
+        );
       case 401:
       case 403:
         return NetworkException.unauthorizedRequest(
@@ -148,7 +153,7 @@ class NetworkException with _$NetworkException {
       methodNotAllowed: () {
         errorMessage = 'Method Allowed';
       },
-      badRequest: () {
+      badRequest: (String message) {
         errorMessage = 'Bad request';
       },
       unauthorizedRequest: (String error) {

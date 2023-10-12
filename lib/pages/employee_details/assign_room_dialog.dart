@@ -44,10 +44,10 @@ class _AssignRoomDialogState extends State<AssignRoomDialog> {
     });
     final failureOrResponse = await roomRepository.getRooms();
     failureOrResponse.fold(
-          (l) => setState(() {
+      (l) => setState(() {
         _status = FormzSubmissionStatus.failure;
       }),
-          (r) => setState(() {
+      (r) => setState(() {
         _status = FormzSubmissionStatus.success;
         _rooms = r;
       }),
@@ -56,22 +56,22 @@ class _AssignRoomDialogState extends State<AssignRoomDialog> {
 
   @override
   Widget build(BuildContext context) => AlertDialog(
-    title: const Text('Assign rooms'),
-    content: buildContent(),
-    actions: [
-      TextButton(
-        onPressed: () => Navigator.of(context).pop(false),
-        child: const Text('Cancel'),
-      ),
-      if (_submitStatus.isInProgress)
-        const CircularProgressIndicator.adaptive()
-      else
-        ElevatedButton(
-          onPressed: !_submitStatus.isInProgress || !_status.isFailure ? _assign : null,
-          child: const Text('OK'),
-        ),
-    ],
-  );
+        title: const Text('Assign rooms'),
+        content: buildContent(),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancel'),
+          ),
+          if (_submitStatus.isInProgress)
+            const CircularProgressIndicator.adaptive()
+          else
+            ElevatedButton(
+              onPressed: !_submitStatus.isInProgress || !_status.isFailure ? _assign : null,
+              child: const Text('OK'),
+            ),
+        ],
+      );
 
   Widget buildContent() {
     if (_status.isFailure) {
@@ -123,31 +123,31 @@ class _AssignRoomDialogState extends State<AssignRoomDialog> {
           ),
           DataColumn(
             label: Text('Name'),
-          )
+          ),
         ],
         rows: _rooms
             .map(
               (e) => DataRow(
-            selected: _assignedRooms.where((element) => element.id == e.id).isNotEmpty,
-            onSelectChanged: (selected) {
-              setState(() {
-                if (selected != null) {
-                  if (selected) {
-                    _assignedRooms.add(e);
-                  } else {
-                    _assignedRooms.removeWhere((element) => element.id == e.id);
-                  }
-                }
-              });
-            },
-            cells: [
-              DataCell(Text(e.id.toString())),
-              DataCell(
-                Text(e.name),
+                selected: _assignedRooms.where((element) => element.id == e.id).isNotEmpty,
+                onSelectChanged: (selected) {
+                  setState(() {
+                    if (selected != null) {
+                      if (selected) {
+                        _assignedRooms.add(e);
+                      } else {
+                        _assignedRooms.removeWhere((element) => element.id == e.id);
+                      }
+                    }
+                  });
+                },
+                cells: [
+                  DataCell(Text(e.id.toString())),
+                  DataCell(
+                    Text(e.name),
+                  ),
+                ],
               ),
-            ],
-          ),
-        )
+            )
             .toList(growable: false),
       );
     }
@@ -163,7 +163,7 @@ class _AssignRoomDialogState extends State<AssignRoomDialog> {
     final failureOrResponse = await employeeRepository.assignRooms(
         employeeId: widget.employeeId, roomIds: _assignedRooms.map((e) => e.id).toList());
     failureOrResponse.fold(
-          (l) {
+      (l) {
         _submitStatus = FormzSubmissionStatus.failure;
         Flushbar<void>(
           message: getErrorMessage(l),
@@ -172,7 +172,7 @@ class _AssignRoomDialogState extends State<AssignRoomDialog> {
           duration: const Duration(seconds: 3),
         ).show(context);
       },
-          (r) {
+      (r) {
         _submitStatus = FormzSubmissionStatus.success;
         Navigator.of(context).pop(true);
       },

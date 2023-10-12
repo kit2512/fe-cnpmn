@@ -22,4 +22,17 @@ class RfidDatasource {
         )
         .toList(growable: false);
   }
+
+  Future<RfidMachine> createRfidMachine({
+    required int roomId,
+    required String name,
+    bool allowCheckin = false,
+  }) async {
+    final Response<Map<String, dynamic>> response = await dioClient.sendRequest.post('/rfid/create', data: {
+      'name': name,
+      'room_id': roomId,
+      'allow_checkin': allowCheckin,
+    });
+    return RfidMachine.fromJson(response.data!);
+  }
 }

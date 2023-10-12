@@ -19,13 +19,36 @@ class RfidRepository {
       );
       return Right(result);
     } on DioException catch (e) {
-      rethrow;
       final exception = NetworkException.getDioException(e);
       return Left(NetworkFailure(exception));
     } catch (_) {
-      rethrow;
+      return Left(
+        NetworkFailure(
+          const NetworkException.unexpectedError(),
+        ),
+      );
+    }
+  }
 
-      return Left(NetworkFailure(const NetworkException.unexpectedError()));
+  Future<Either<Failure, RfidMachine>> createRfidMachine({
+    required int roomId,
+    required String name,
+  }) async {
+    try {
+      final result = await rfidDatasource.createRfidMachine(
+        roomId: roomId,
+        name: name,
+      );
+      return Right(result);
+    } on DioException catch (e) {
+      final exception = NetworkException.getDioException(e);
+      return Left(NetworkFailure(exception));
+    } catch (_) {
+      return Left(
+        NetworkFailure(
+          const NetworkException.unexpectedError(),
+        ),
+      );
     }
   }
 }

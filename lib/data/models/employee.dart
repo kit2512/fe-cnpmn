@@ -1,3 +1,4 @@
+import 'package:fe_cnpmn/data/models/card.dart';
 import 'package:fe_cnpmn/data/models/checkin_history.dart';
 import 'package:fe_cnpmn/data/models/room.dart';
 import 'package:fe_cnpmn/data/models/user_info.dart';
@@ -7,20 +8,22 @@ part 'employee.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class Employee {
+
   Employee({
     required this.id,
     required this.userId,
     required this.user,
     required this.checkinHistory,
     required this.allowedRooms,
+    this.card,
   });
 
+  final RfidCard? card;
   final int id;
   final int userId;
   final UserInfo user;
   final List<CheckinHistory> checkinHistory;
   final List<Room> allowedRooms;
-
   factory Employee.fromJson(Map<String, dynamic> json) => _$EmployeeFromJson(json);
 
 

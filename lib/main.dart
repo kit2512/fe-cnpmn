@@ -1,5 +1,6 @@
 import 'package:fe_cnpmn/dependency_injection.dart';
 import 'package:fe_cnpmn/pages/home_page/home_page.dart';
+import 'package:fe_cnpmn/pages/login_page.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -13,9 +14,10 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MaterialApp(
         debugShowCheckedModeBanner: false ,
-        initialRoute: '/',
+        initialRoute: '/login',
         routes: {
-          '/': (context) => const HomePage(),
+          '/login': (context) => const LoginPage(),
+          '/home': (context) => const HomePage(),
         },
       );
 }

@@ -20,7 +20,7 @@ mixin _$NetworkException {
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() badRequest,
+    required TResult Function(String message) badRequest,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -41,7 +41,7 @@ mixin _$NetworkException {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? badRequest,
+    TResult? Function(String message)? badRequest,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -62,7 +62,7 @@ mixin _$NetworkException {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? badRequest,
+    TResult Function(String message)? badRequest,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -204,7 +204,7 @@ class _$RequestCancelled implements RequestCancelled {
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() badRequest,
+    required TResult Function(String message) badRequest,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -228,7 +228,7 @@ class _$RequestCancelled implements RequestCancelled {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? badRequest,
+    TResult? Function(String message)? badRequest,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -252,7 +252,7 @@ class _$RequestCancelled implements RequestCancelled {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? badRequest,
+    TResult Function(String message)? badRequest,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -423,7 +423,7 @@ class _$UnauthorizedRequest implements UnauthorizedRequest {
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() badRequest,
+    required TResult Function(String message) badRequest,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -447,7 +447,7 @@ class _$UnauthorizedRequest implements UnauthorizedRequest {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? badRequest,
+    TResult? Function(String message)? badRequest,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -471,7 +471,7 @@ class _$UnauthorizedRequest implements UnauthorizedRequest {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? badRequest,
+    TResult Function(String message)? badRequest,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -586,6 +586,8 @@ abstract class _$$BadRequestCopyWith<$Res> {
   factory _$$BadRequestCopyWith(
           _$BadRequest value, $Res Function(_$BadRequest) then) =
       __$$BadRequestCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String message});
 }
 
 /// @nodoc
@@ -595,33 +597,57 @@ class __$$BadRequestCopyWithImpl<$Res>
   __$$BadRequestCopyWithImpl(
       _$BadRequest _value, $Res Function(_$BadRequest) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$BadRequest(
+      null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$BadRequest implements BadRequest {
-  const _$BadRequest();
+  const _$BadRequest(this.message);
+
+  @override
+  final String message;
 
   @override
   String toString() {
-    return 'NetworkException.badRequest()';
+    return 'NetworkException.badRequest(message: $message)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$BadRequest);
+        (other.runtimeType == runtimeType &&
+            other is _$BadRequest &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$BadRequestCopyWith<_$BadRequest> get copyWith =>
+      __$$BadRequestCopyWithImpl<_$BadRequest>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() badRequest,
+    required TResult Function(String message) badRequest,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -637,7 +663,7 @@ class _$BadRequest implements BadRequest {
     required TResult Function(String error) defaultError,
     required TResult Function() unexpectedError,
   }) {
-    return badRequest();
+    return badRequest(message);
   }
 
   @override
@@ -645,7 +671,7 @@ class _$BadRequest implements BadRequest {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? badRequest,
+    TResult? Function(String message)? badRequest,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -661,7 +687,7 @@ class _$BadRequest implements BadRequest {
     TResult? Function(String error)? defaultError,
     TResult? Function()? unexpectedError,
   }) {
-    return badRequest?.call();
+    return badRequest?.call(message);
   }
 
   @override
@@ -669,7 +695,7 @@ class _$BadRequest implements BadRequest {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? badRequest,
+    TResult Function(String message)? badRequest,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -687,7 +713,7 @@ class _$BadRequest implements BadRequest {
     required TResult orElse(),
   }) {
     if (badRequest != null) {
-      return badRequest();
+      return badRequest(message);
     }
     return orElse();
   }
@@ -770,7 +796,12 @@ class _$BadRequest implements BadRequest {
 }
 
 abstract class BadRequest implements NetworkException {
-  const factory BadRequest() = _$BadRequest;
+  const factory BadRequest(final String message) = _$BadRequest;
+
+  String get message;
+  @JsonKey(ignore: true)
+  _$$BadRequestCopyWith<_$BadRequest> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -838,7 +869,7 @@ class _$NotFound implements NotFound {
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() badRequest,
+    required TResult Function(String message) badRequest,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -862,7 +893,7 @@ class _$NotFound implements NotFound {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? badRequest,
+    TResult? Function(String message)? badRequest,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -886,7 +917,7 @@ class _$NotFound implements NotFound {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? badRequest,
+    TResult Function(String message)? badRequest,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -1035,7 +1066,7 @@ class _$MethodNotAllowed implements MethodNotAllowed {
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() badRequest,
+    required TResult Function(String message) badRequest,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -1059,7 +1090,7 @@ class _$MethodNotAllowed implements MethodNotAllowed {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? badRequest,
+    TResult? Function(String message)? badRequest,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -1083,7 +1114,7 @@ class _$MethodNotAllowed implements MethodNotAllowed {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? badRequest,
+    TResult Function(String message)? badRequest,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -1227,7 +1258,7 @@ class _$NotAcceptable implements NotAcceptable {
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() badRequest,
+    required TResult Function(String message) badRequest,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -1251,7 +1282,7 @@ class _$NotAcceptable implements NotAcceptable {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? badRequest,
+    TResult? Function(String message)? badRequest,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -1275,7 +1306,7 @@ class _$NotAcceptable implements NotAcceptable {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? badRequest,
+    TResult Function(String message)? badRequest,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -1419,7 +1450,7 @@ class _$RequestTimeout implements RequestTimeout {
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() badRequest,
+    required TResult Function(String message) badRequest,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -1443,7 +1474,7 @@ class _$RequestTimeout implements RequestTimeout {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? badRequest,
+    TResult? Function(String message)? badRequest,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -1467,7 +1498,7 @@ class _$RequestTimeout implements RequestTimeout {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? badRequest,
+    TResult Function(String message)? badRequest,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -1611,7 +1642,7 @@ class _$SendTimeout implements SendTimeout {
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() badRequest,
+    required TResult Function(String message) badRequest,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -1635,7 +1666,7 @@ class _$SendTimeout implements SendTimeout {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? badRequest,
+    TResult? Function(String message)? badRequest,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -1659,7 +1690,7 @@ class _$SendTimeout implements SendTimeout {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? badRequest,
+    TResult Function(String message)? badRequest,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -1802,7 +1833,7 @@ class _$Conflict implements Conflict {
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() badRequest,
+    required TResult Function(String message) badRequest,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -1826,7 +1857,7 @@ class _$Conflict implements Conflict {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? badRequest,
+    TResult? Function(String message)? badRequest,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -1850,7 +1881,7 @@ class _$Conflict implements Conflict {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? badRequest,
+    TResult Function(String message)? badRequest,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -1994,7 +2025,7 @@ class _$InternalServerError implements InternalServerError {
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() badRequest,
+    required TResult Function(String message) badRequest,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -2018,7 +2049,7 @@ class _$InternalServerError implements InternalServerError {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? badRequest,
+    TResult? Function(String message)? badRequest,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -2042,7 +2073,7 @@ class _$InternalServerError implements InternalServerError {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? badRequest,
+    TResult Function(String message)? badRequest,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -2186,7 +2217,7 @@ class _$NotImplemented implements NotImplemented {
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() badRequest,
+    required TResult Function(String message) badRequest,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -2210,7 +2241,7 @@ class _$NotImplemented implements NotImplemented {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? badRequest,
+    TResult? Function(String message)? badRequest,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -2234,7 +2265,7 @@ class _$NotImplemented implements NotImplemented {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? badRequest,
+    TResult Function(String message)? badRequest,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -2378,7 +2409,7 @@ class _$ServiceUnavailable implements ServiceUnavailable {
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() badRequest,
+    required TResult Function(String message) badRequest,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -2402,7 +2433,7 @@ class _$ServiceUnavailable implements ServiceUnavailable {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? badRequest,
+    TResult? Function(String message)? badRequest,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -2426,7 +2457,7 @@ class _$ServiceUnavailable implements ServiceUnavailable {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? badRequest,
+    TResult Function(String message)? badRequest,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -2570,7 +2601,7 @@ class _$NoInternetConnection implements NoInternetConnection {
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() badRequest,
+    required TResult Function(String message) badRequest,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -2594,7 +2625,7 @@ class _$NoInternetConnection implements NoInternetConnection {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? badRequest,
+    TResult? Function(String message)? badRequest,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -2618,7 +2649,7 @@ class _$NoInternetConnection implements NoInternetConnection {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? badRequest,
+    TResult Function(String message)? badRequest,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -2762,7 +2793,7 @@ class _$FormatException implements FormatException {
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() badRequest,
+    required TResult Function(String message) badRequest,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -2786,7 +2817,7 @@ class _$FormatException implements FormatException {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? badRequest,
+    TResult? Function(String message)? badRequest,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -2810,7 +2841,7 @@ class _$FormatException implements FormatException {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? badRequest,
+    TResult Function(String message)? badRequest,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -2954,7 +2985,7 @@ class _$UnableToProcess implements UnableToProcess {
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() badRequest,
+    required TResult Function(String message) badRequest,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -2978,7 +3009,7 @@ class _$UnableToProcess implements UnableToProcess {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? badRequest,
+    TResult? Function(String message)? badRequest,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -3002,7 +3033,7 @@ class _$UnableToProcess implements UnableToProcess {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? badRequest,
+    TResult Function(String message)? badRequest,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -3172,7 +3203,7 @@ class _$DefaultError implements DefaultError {
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() badRequest,
+    required TResult Function(String message) badRequest,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -3196,7 +3227,7 @@ class _$DefaultError implements DefaultError {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? badRequest,
+    TResult? Function(String message)? badRequest,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -3220,7 +3251,7 @@ class _$DefaultError implements DefaultError {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? badRequest,
+    TResult Function(String message)? badRequest,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
@@ -3369,7 +3400,7 @@ class _$UnexpectedError implements UnexpectedError {
   TResult when<TResult extends Object?>({
     required TResult Function() requestCancelled,
     required TResult Function(String reason) unauthorizedRequest,
-    required TResult Function() badRequest,
+    required TResult Function(String message) badRequest,
     required TResult Function(String reason) notFound,
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
@@ -3393,7 +3424,7 @@ class _$UnexpectedError implements UnexpectedError {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? requestCancelled,
     TResult? Function(String reason)? unauthorizedRequest,
-    TResult? Function()? badRequest,
+    TResult? Function(String message)? badRequest,
     TResult? Function(String reason)? notFound,
     TResult? Function()? methodNotAllowed,
     TResult? Function()? notAcceptable,
@@ -3417,7 +3448,7 @@ class _$UnexpectedError implements UnexpectedError {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? requestCancelled,
     TResult Function(String reason)? unauthorizedRequest,
-    TResult Function()? badRequest,
+    TResult Function(String message)? badRequest,
     TResult Function(String reason)? notFound,
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,

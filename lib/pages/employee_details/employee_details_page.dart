@@ -1,13 +1,8 @@
-import 'package:another_flushbar/flushbar.dart';
-import 'package:fe_cnpmn/data/models/room.dart';
 import 'package:fe_cnpmn/data/repositories/employee_repository.dart';
-import 'package:fe_cnpmn/data/repositories/rooms_repository.dart';
 import 'package:fe_cnpmn/dependency_injection.dart';
-import 'package:fe_cnpmn/helpers/exception_helper.dart';
 import 'package:fe_cnpmn/pages/employee_details/blocs/employee_details_bloc/employee_details_cubit.dart';
 import 'package:fe_cnpmn/pages/employee_details/rooms_view.dart';
 import 'package:fe_cnpmn/pages/employees_page/cubit/employees_cubit.dart';
-import 'package:fe_cnpmn/pages/room_details/room_details_page.dart';
 import 'package:fe_cnpmn/pages/widgets/checkin_history_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -108,6 +103,31 @@ class _EmployeeDetailsView extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            'Card ID: ',
+                          ),
+                          Text(
+                            state.details!.card?.id ?? 'No card assigned',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(width: 8,),
+                          InkWell(
+                            onTap: () {},
+                            child: const Icon(
+                              Icons.edit,
+                              size: 16,
+                              color: Colors.blue,
+                            ),
+                          )
                         ],
                       ),
                       const SizedBox(

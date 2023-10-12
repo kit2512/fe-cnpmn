@@ -14,9 +14,18 @@ class EmployeeListView extends StatefulWidget {
   const EmployeeListView({
     super.key,
     this.roomId,
+    this.selectable = false,
+    this.enableOnTap = false,
+    this.onSelect,
+    this.showDateCreated = true,
   });
 
+  final bool showDateCreated;
+
   final int? roomId;
+  final bool selectable;
+  final bool enableOnTap;
+  final void Function(Employee)? onSelect;
 
   @override
   State<EmployeeListView> createState() => _EmployeeListViewState();
@@ -51,6 +60,17 @@ class _EmployeeListViewState extends State<EmployeeListView> {
   FormzSubmissionStatus _status = FormzSubmissionStatus.initial;
   String? _errorMessage;
   late List<Employee> _employees;
+
+  int? selectedId;
+
+  void _onTap(Employee employee) {
+    setState(() {
+      selectedId = employee.id;
+    });
+    if (widget.onSelect != null) {
+      widget.onSelect!(employee);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,36 +119,44 @@ class _EmployeeListViewState extends State<EmployeeListView> {
             )
           else
             DataTable(
-              showCheckboxColumn: false,
+              showCheckboxColumn: widget.selectable,
               showBottomBorder: true,
-              columns: const [
-                DataColumn(
+              columns:  [
+                const DataColumn(
                   label: Text('ID'),
                 ),
-                DataColumn(
+                const DataColumn(
                   label: Text('Username'),
                 ),
-                DataColumn(
+                const DataColumn(
                   label: Text('First name'),
                 ),
-                DataColumn(
+                const DataColumn(
                   label: Text('Last name'),
                 ),
-                DataColumn(
+                const DataColumn(
                   label: Text('Role'),
                 ),
-                DataColumn(
+                if (widget.showDateCreated) const DataColumn(
                   label: Text('Date created'),
                 ),
               ],
               rows: _employees
                   .map(
                     (emp) => DataRow(
-                      onSelectChanged: (_) => Navigator.of(context).push(
-                        EmployeeDetailsPage.route(
-                          id: emp.id,
-                        ),
-                      ),
+                      selected: selectedId == emp.id,
+                      onSelectChanged: (_) {
+                        if (widget.enableOnTap) {
+                          Navigator.of(context).push(
+                            EmployeeDetailsPage.route(
+                              id: emp.id,
+                            ),
+                          );
+                        }
+                        if (widget.selectable) {
+                          _onTap(emp);
+                        }
+                      },
                       cells: [
                         DataCell(
                           Text(emp.id.toString()),
@@ -145,7 +173,7 @@ class _EmployeeListViewState extends State<EmployeeListView> {
                         DataCell(
                           Text(emp.user.role.translationName),
                         ),
-                        DataCell(
+                        if (widget.showDateCreated) DataCell(
                           Text(
                             DateFormat('dd-MM-yyyy').format(
                               emp.user.dateCreated,

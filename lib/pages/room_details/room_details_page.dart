@@ -166,6 +166,7 @@ class _RoomDetailsPageView extends StatelessWidget {
                               RfidMachineListView(
                                 roomId: state.room!.id,
                                 showRoomId: false,
+                                enableOnTap: true,
                               ),
                             ],
                           ),

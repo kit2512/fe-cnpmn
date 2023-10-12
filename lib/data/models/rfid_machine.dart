@@ -6,21 +6,30 @@ part 'rfid_machine.g.dart';
 
 @JsonSerializable()
 class RfidMachine {
+
   const RfidMachine({
     required this.id,
     required this.roomId,
     required this.dateCreated,
+    required this.name,
+    required this.allowCheckin,
     this.room,
     this.checkinHistory,
   });
 
+  factory RfidMachine.fromJson(Map<String, dynamic> json) => _$RfidMachineFromJson(json);
+
   final int id;
   final int roomId;
   final Room? room;
+
+  final String name;
   final List<CheckinHistory>? checkinHistory;
   final DateTime dateCreated;
 
-  factory RfidMachine.fromJson(Map<String, dynamic> json) => _$RfidMachineFromJson(json);
+  final bool allowCheckin;
+
+
 
   Map<String, dynamic> toJson() => _$RfidMachineToJson(this);
 }
