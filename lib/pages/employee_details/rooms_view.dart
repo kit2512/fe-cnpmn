@@ -1,4 +1,3 @@
-
 import 'package:fe_cnpmn/data/repositories/rooms_repository.dart';
 import 'package:fe_cnpmn/dependency_injection.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +10,7 @@ import 'assign_room_dialog.dart';
 
 class RoomsView extends StatefulWidget {
   const RoomsView({
+    super.key,
     required this.employeeId,
   });
 
@@ -36,12 +36,13 @@ class _RoomsViewState extends State<RoomsView> {
     setState(() {
       _status = FormzSubmissionStatus.inProgress;
     });
-    final failureOrResponse = await roomRepository.getRooms(employeeId: widget.employeeId);
+    final failureOrResponse =
+        await roomRepository.getRooms(employeeId: widget.employeeId);
     failureOrResponse.fold(
-          (l) => setState(() {
+      (l) => setState(() {
         _status = FormzSubmissionStatus.failure;
       }),
-          (r) => setState(() {
+      (r) => setState(() {
         _status = FormzSubmissionStatus.success;
         _rooms = r;
       }),
@@ -86,36 +87,36 @@ class _RoomsViewState extends State<RoomsView> {
           Expanded(
             child: _rooms.isEmpty
                 ? const Center(
-              child: Text('No Rooms'),
-            )
+                    child: Text('No Rooms'),
+                  )
                 : DataTable(
-              showCheckboxColumn: false,
-              columns: const [
-                DataColumn(
-                  label: Text('ID'),
-                ),
-                DataColumn(
-                  label: Text('Name'),
-                )
-              ],
-              rows: _rooms
-                  .map(
-                    (e) => DataRow(
-                  onSelectChanged: (_) {
-                    Navigator.of(context).push(
-                      RoomDetailsPage.route(details: e),
-                    );
-                  },
-                  cells: [
-                    DataCell(Text(e.id.toString())),
-                    DataCell(
-                      Text(e.name),
-                    ),
-                  ],
-                ),
-              )
-                  .toList(growable: false),
-            ),
+                    showCheckboxColumn: false,
+                    columns: const [
+                      DataColumn(
+                        label: Text('ID'),
+                      ),
+                      DataColumn(
+                        label: Text('Name'),
+                      )
+                    ],
+                    rows: _rooms
+                        .map(
+                          (e) => DataRow(
+                            onSelectChanged: (_) {
+                              Navigator.of(context).push(
+                                RoomDetailsPage.route(details: e),
+                              );
+                            },
+                            cells: [
+                              DataCell(Text(e.id.toString())),
+                              DataCell(
+                                Text(e.name),
+                              ),
+                            ],
+                          ),
+                        )
+                        .toList(growable: false),
+                  ),
           ),
         ],
       );

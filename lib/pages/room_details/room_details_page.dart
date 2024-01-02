@@ -35,7 +35,8 @@ class _RoomDetailsPageView extends StatelessWidget {
   const _RoomDetailsPageView({super.key});
 
   @override
-  Widget build(BuildContext context) => BlocConsumer<RoomDetailsCubit, RoomDetailsState>(
+  Widget build(BuildContext context) =>
+      BlocConsumer<RoomDetailsCubit, RoomDetailsState>(
         listener: (context, state) {},
         builder: (context, state) => Scaffold(
           appBar: AppBar(
@@ -102,7 +103,8 @@ class _RoomDetailsPageView extends StatelessWidget {
                               'Date created: ',
                             ),
                             Text(
-                              DateFormat('dd-MM-yyyy hh:mm:ss').format(state.room!.dateCreated),
+                              DateFormat('dd-MM-yyyy hh:mm:ss')
+                                  .format(state.room!.dateCreated),
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -127,6 +129,7 @@ class _RoomDetailsPageView extends StatelessWidget {
                             Icons.delete_rounded,
                           ),
                         ),
+                       
                       ],
                     )
                   ],

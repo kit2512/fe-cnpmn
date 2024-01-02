@@ -143,7 +143,9 @@ class _CheckinHistoryListViewState extends State<CheckinHistoryListView> {
                                 ),
                                 DataCell(
                                   Text(
-                                    DateFormat('dd-MM-yyyy hh:mm:ss',).format(item.dateCreated),
+                                    DateFormat(
+                                      'dd-MM-yyyy hh:mm:ss',
+                                    ).format(item.dateCreated),
                                   ),
                                 ),
                                 if (widget.showEmployeeId)

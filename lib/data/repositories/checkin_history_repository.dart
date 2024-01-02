@@ -4,6 +4,7 @@ import 'package:fe_cnpmn/config/errors/failure.dart';
 import 'package:fe_cnpmn/config/errors/network_exception.dart';
 import 'package:fe_cnpmn/data/datasources/checkin_datasource.dart';
 import 'package:fe_cnpmn/data/models/checkin_history.dart';
+import 'package:fe_cnpmn/data/models/work_day.dart';
 
 class CheckinRepository {
   const CheckinRepository({
@@ -25,6 +26,23 @@ class CheckinRepository {
         cardId: cardId,
         rfidId: rfidId,
       );
+      return Right(result);
+    } on DioException catch (e) {
+      final exception = NetworkException.getDioException(e);
+      return Left(NetworkFailure(exception));
+    } catch (_) {
+      return Left(NetworkFailure(const NetworkException.unexpectedError()));
+    }
+  }
+
+  Future<Either<Failure, WorkDay>> getWorkDays(
+    DateTime startDate,
+    DateTime endDate,
+    int employeeId,
+  ) async {
+    try {
+      final result =
+          await checkinDatasource.getWorkDays(startDate, endDate, employeeId);
       return Right(result);
     } on DioException catch (e) {
       final exception = NetworkException.getDioException(e);

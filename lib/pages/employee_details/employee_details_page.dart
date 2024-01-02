@@ -2,6 +2,7 @@ import 'package:fe_cnpmn/data/repositories/employee_repository.dart';
 import 'package:fe_cnpmn/dependency_injection.dart';
 import 'package:fe_cnpmn/pages/employee_details/blocs/employee_details_bloc/employee_details_cubit.dart';
 import 'package:fe_cnpmn/pages/employee_details/rooms_view.dart';
+import 'package:fe_cnpmn/pages/employee_details/timekeeping.dart';
 import 'package:fe_cnpmn/pages/employees_page/cubit/employees_cubit.dart';
 import 'package:fe_cnpmn/pages/widgets/checkin_history_list.dart';
 import 'package:flutter/material.dart';
@@ -25,8 +26,10 @@ class EmployeeDetailsPage extends StatelessWidget {
       );
 
   @override
-  Widget build(BuildContext context) => BlocConsumer<EmployeeDetailsCubit, EmployeeDetailsState>(
-        listenWhen: (prev, current) => current.detailsStatus != prev.deleteStatus,
+  Widget build(BuildContext context) =>
+      BlocConsumer<EmployeeDetailsCubit, EmployeeDetailsState>(
+        listenWhen: (prev, current) =>
+            current.detailsStatus != prev.deleteStatus,
         listener: (context, state) {
           if (state.deleteStatus.isSuccess) {
             getIt<EmployeesCubit>().getEmployees(refresh: true);
@@ -37,7 +40,8 @@ class EmployeeDetailsPage extends StatelessWidget {
           appBar: state.detailsStatus.isInProgress
               ? null
               : AppBar(
-                  title: Text('Employee: ${state.details?.user.fullName ?? ''}'),
+                  title:
+                      Text('Employee: ${state.details?.user.fullName ?? ''}'),
                 ),
           body: state.detailsStatus.isInProgress
               ? const Center(
@@ -54,7 +58,9 @@ class EmployeeDetailsPage extends StatelessWidget {
                             height: 12,
                           ),
                           ElevatedButton(
-                            onPressed: () => context.read<EmployeeDetailsCubit>().getDetails(state.id!),
+                            onPressed: () => context
+                                .read<EmployeeDetailsCubit>()
+                                .getDetails(state.id!),
                             child: const Text('Refresh'),
                           ),
                         ],
@@ -69,7 +75,8 @@ class _EmployeeDetailsView extends StatelessWidget {
   const _EmployeeDetailsView();
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<EmployeeDetailsCubit, EmployeeDetailsState>(
+  Widget build(BuildContext context) =>
+      BlocBuilder<EmployeeDetailsCubit, EmployeeDetailsState>(
         builder: (context, state) => Padding(
           padding: const EdgeInsets.all(16).copyWith(top: 24),
           child: Column(
@@ -119,7 +126,9 @@ class _EmployeeDetailsView extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(width: 8,),
+                          const SizedBox(
+                            width: 8,
+                          ),
                           InkWell(
                             onTap: () {},
                             child: const Icon(
@@ -210,7 +219,8 @@ class _EmployeeDetailsView extends StatelessWidget {
                         context: context,
                         builder: (context) => AlertDialog(
                           title: const Text('Confirm delete'),
-                          content: const Text('Are you sure you want to delete this employee?'),
+                          content: const Text(
+                              'Are you sure you want to delete this employee?'),
                           actions: [
                             TextButton(
                               onPressed: () => Navigator.of(context).pop(false),
@@ -225,9 +235,30 @@ class _EmployeeDetailsView extends StatelessWidget {
                       ).then(
                         (value) {
                           if (value == true) {
-                            context.read<EmployeeDetailsCubit>().deleteEmployee();
+                            context
+                                .read<EmployeeDetailsCubit>()
+                                .deleteEmployee();
                           }
                         },
+                      );
+                    },
+                  ),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.pink[200],
+                    ),
+                    icon: const Icon(Icons.calendar_month),
+                    label: const Text('Timekeeping'),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => Timekeeping(
+                            employeeId: state.id ?? 0,
+                          ),
+                        ),
                       );
                     },
                   ),
