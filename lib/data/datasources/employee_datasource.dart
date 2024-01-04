@@ -27,6 +27,7 @@ class EmployeeDataSource {
     required String username,
     required String password,
     required UserRole role,
+    required int salary,
   }) async {
     final Response<Map<String, dynamic>> response = await dio.sendRequest.post('employee/create', data: {
       'first_name': firstName,
@@ -34,6 +35,7 @@ class EmployeeDataSource {
       'username': username,
       'password': password,
       'role': role.name,
+      'salary': salary,
     });
     return Employee.fromJson(response.data!);
   }

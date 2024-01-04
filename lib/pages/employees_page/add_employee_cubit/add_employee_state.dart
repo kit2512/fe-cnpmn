@@ -7,6 +7,7 @@ class AddEmployeeState extends Equatable with FormzMixin {
     required this.username,
     required this.password,
     required this.role,
+    required this.salary,
     required this.creationStatus,
     required this.errorMessage,
   });
@@ -17,6 +18,7 @@ class AddEmployeeState extends Equatable with FormzMixin {
         username: Name.pure(),
         password: Password.pure(),
         role: UserRole.employee,
+        salary: 0,
         creationStatus: FormzSubmissionStatus.initial,
         errorMessage: '',
       );
@@ -28,6 +30,7 @@ class AddEmployeeState extends Equatable with FormzMixin {
   final UserRole role;
   final FormzSubmissionStatus creationStatus;
   final String? errorMessage;
+  final int salary;
 
   AddEmployeeState copyWith({
     Name? firstName,
@@ -35,6 +38,7 @@ class AddEmployeeState extends Equatable with FormzMixin {
     Name? username,
     Password? password,
     UserRole? role,
+    int? salary,
     FormzSubmissionStatus? creationStatus,
     String? errorMessage,
   }) =>
@@ -44,6 +48,7 @@ class AddEmployeeState extends Equatable with FormzMixin {
         username: username ?? this.username,
         password: password ?? this.password,
         role: role ?? this.role,
+        salary: salary ?? this.salary,
         creationStatus: creationStatus ?? this.creationStatus,
         errorMessage: errorMessage ?? this.errorMessage,
       );
@@ -57,10 +62,14 @@ class AddEmployeeState extends Equatable with FormzMixin {
         password,
         creationStatus,
         errorMessage,
+        salary,
       ];
 
   @override
   List<FormzInput> get inputs => [
-    firstName, lastName, username, password
-  ];
+        firstName,
+        lastName,
+        username,
+        password,
+      ];
 }

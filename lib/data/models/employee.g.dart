@@ -16,6 +16,7 @@ Employee _$EmployeeFromJson(Map<String, dynamic> json) => Employee(
       allowedRooms: (json['allowed_rooms'] as List<dynamic>)
           .map((e) => Room.fromJson(e as Map<String, dynamic>))
           .toList(),
+      salary: json['salary'] as int,
       card: json['card'] == null
           ? null
           : RfidCard.fromJson(json['card'] as Map<String, dynamic>),
@@ -28,4 +29,5 @@ Map<String, dynamic> _$EmployeeToJson(Employee instance) => <String, dynamic>{
       'user': instance.user,
       'checkin_history': instance.checkinHistory,
       'allowed_rooms': instance.allowedRooms,
+      'salary': instance.salary,
     };

@@ -16,7 +16,8 @@ class AddEmployeeDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocProvider<AddEmployeeCubit>(
-        create: (context) => AddEmployeeCubit(employeeRepository: getIt<EmployeeRepository>()),
+        create: (context) =>
+            AddEmployeeCubit(employeeRepository: getIt<EmployeeRepository>()),
         child: const _AddEmployeeDialogView(),
       );
 }
@@ -25,8 +26,10 @@ class _AddEmployeeDialogView extends StatelessWidget {
   const _AddEmployeeDialogView();
 
   @override
-  Widget build(BuildContext context) => BlocConsumer<AddEmployeeCubit, AddEmployeeState>(
-        listenWhen: (prev, current) => current.creationStatus != prev.creationStatus,
+  Widget build(BuildContext context) =>
+      BlocConsumer<AddEmployeeCubit, AddEmployeeState>(
+        listenWhen: (prev, current) =>
+            current.creationStatus != prev.creationStatus,
         listener: (context, state) {
           if (state.creationStatus.isFailure) {
             Flushbar<void>(
@@ -42,7 +45,8 @@ class _AddEmployeeDialogView extends StatelessWidget {
         },
         builder: (context, state) => AlertDialog(
           title: const Text('Add employee'),
-          actionsPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          actionsPadding:
+              const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           content: const Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
@@ -66,17 +70,27 @@ class _AddEmployeeDialogView extends StatelessWidget {
               SizedBox(
                 height: 12.0,
               ),
+              _SalaryField(),
+              SizedBox(
+                height: 12.0,
+              ),
               _RolePicker(),
             ],
           ),
           actions: [
             TextButton(
-              onPressed: state.creationStatus.isInProgress ? null : Navigator.of(context).pop,
+              onPressed: state.creationStatus.isInProgress
+                  ? null
+                  : Navigator.of(context).pop,
               child: const Text('Cancel'),
             ),
             ElevatedButton(
-              onPressed: state.creationStatus.isInProgress || state.isNotValid ? null : context.read<AddEmployeeCubit>().createEmployee,
-              child: state.creationStatus.isInProgress ? const CircularProgressIndicator() : const Text('Add'),
+              onPressed: state.creationStatus.isInProgress || state.isNotValid
+                  ? null
+                  : context.read<AddEmployeeCubit>().createEmployee,
+              child: state.creationStatus.isInProgress
+                  ? const CircularProgressIndicator()
+                  : const Text('Add'),
             )
           ],
         ),
@@ -87,13 +101,15 @@ class _FirstNameField extends StatelessWidget {
   const _FirstNameField();
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<AddEmployeeCubit, AddEmployeeState>(
+  Widget build(BuildContext context) =>
+      BlocBuilder<AddEmployeeCubit, AddEmployeeState>(
         buildWhen: (prev, current) => prev.firstName != current.firstName,
         builder: (context, state) => NameInput(
           enabled: !state.creationStatus.isInProgress,
-          validator: (_) => (state.firstName.isNotValid && state.firstName.error != null)
-              ? Name.getError(state.firstName.error!)
-              : null,
+          validator: (_) =>
+              (state.firstName.isNotValid && state.firstName.error != null)
+                  ? Name.getError(state.firstName.error!)
+                  : null,
           onChanged: context.read<AddEmployeeCubit>().firstNameChanged,
           labelText: 'First name',
           initialValue: state.firstName.value,
@@ -105,13 +121,17 @@ class _LastNameField extends StatelessWidget {
   const _LastNameField();
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<AddEmployeeCubit, AddEmployeeState>(
+  Widget build(BuildContext context) =>
+      BlocBuilder<AddEmployeeCubit, AddEmployeeState>(
         buildWhen: (prev, current) =>
-            prev.creationStatus != current.creationStatus || prev.lastName != current.lastName,
+            prev.creationStatus != current.creationStatus ||
+            prev.lastName != current.lastName,
         builder: (context, state) => NameInput(
           enabled: !state.creationStatus.isInProgress,
           validator: (_) =>
-              (state.lastName.isNotValid && state.lastName.error != null) ? Name.getError(state.lastName.error!) : null,
+              (state.lastName.isNotValid && state.lastName.error != null)
+                  ? Name.getError(state.lastName.error!)
+                  : null,
           onChanged: context.read<AddEmployeeCubit>().lastNameChanged,
           labelText: 'Last name',
           initialValue: state.lastName.value,
@@ -123,16 +143,44 @@ class _UsernameField extends StatelessWidget {
   const _UsernameField();
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<AddEmployeeCubit, AddEmployeeState>(
+  Widget build(BuildContext context) =>
+      BlocBuilder<AddEmployeeCubit, AddEmployeeState>(
         buildWhen: (prev, current) =>
-            prev.creationStatus != current.creationStatus || prev.username != current.username,
+            prev.creationStatus != current.creationStatus ||
+            prev.username != current.username,
         builder: (context, state) => NameInput(
           enabled: !state.creationStatus.isInProgress,
           validator: (_) =>
-              (state.username.isNotValid && state.username.error != null) ? Name.getError(state.username.error!) : null,
+              (state.username.isNotValid && state.username.error != null)
+                  ? Name.getError(state.username.error!)
+                  : null,
           onChanged: context.read<AddEmployeeCubit>().usernameChanged,
           labelText: 'Username',
           initialValue: state.username.value,
+        ),
+      );
+}
+
+class _SalaryField extends StatelessWidget {
+  const _SalaryField();
+
+  @override
+  Widget build(BuildContext context) =>
+      BlocBuilder<AddEmployeeCubit, AddEmployeeState>(
+        buildWhen: (prev, current) =>
+            prev.creationStatus != current.creationStatus ||
+            prev.salary != current.salary,
+        builder: (context, state) => TextFormField(
+          enabled: !state.creationStatus.isInProgress,
+          validator: (_) =>
+              (state.salary < 0) ? 'Salary must be greater than 0' : null,
+          onChanged: (value) {
+            context.read<AddEmployeeCubit>().salaryChanged(int.parse(value));
+          },
+          keyboardType: TextInputType.number,
+          decoration: const InputDecoration(
+            labelText: 'Salary',
+          ),
         ),
       );
 }
@@ -141,14 +189,17 @@ class _PasswordField extends StatelessWidget {
   const _PasswordField();
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<AddEmployeeCubit, AddEmployeeState>(
+  Widget build(BuildContext context) =>
+      BlocBuilder<AddEmployeeCubit, AddEmployeeState>(
         buildWhen: (prev, current) =>
-            prev.creationStatus != current.creationStatus || prev.password != current.password,
+            prev.creationStatus != current.creationStatus ||
+            prev.password != current.password,
         builder: (context, state) => PasswordTextFormField(
           enabled: !state.creationStatus.isInProgress,
-          validator: (_) => (state.password.isNotValid && state.password.error != null)
-              ? Password.getError(state.password.error!)
-              : null,
+          validator: (_) =>
+              (state.password.isNotValid && state.password.error != null)
+                  ? Password.getError(state.password.error!)
+                  : null,
           onChanged: context.read<AddEmployeeCubit>().passwordChanged,
           labelText: 'Password',
         ),
@@ -167,7 +218,9 @@ class _RolePicker extends StatelessWidget {
             width: 16,
           ),
           BlocBuilder<AddEmployeeCubit, AddEmployeeState>(
-            buildWhen: (prev, current) => prev.creationStatus != current.creationStatus || prev.role != current.role,
+            buildWhen: (prev, current) =>
+                prev.creationStatus != current.creationStatus ||
+                prev.role != current.role,
             builder: (context, state) => DropdownMenu<UserRole>(
               enableSearch: false,
               hintText: 'Choose role',

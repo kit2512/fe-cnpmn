@@ -12,4 +12,19 @@ class Constants {
       return '1.000.000';
     }
   }
+
+  static String getSalary(int salary) {
+    final String salaryString = salary.toString();
+    String result = '';
+    int count = 0;
+    for (int i = salaryString.length - 1; i >= 0; i--) {
+      count++;
+      result = salaryString[i] + result;
+      if (count == 3 && i != 0) {
+        result = '.$result';
+        count = 0;
+      }
+    }
+    return result;
+  }
 }
