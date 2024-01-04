@@ -35,14 +35,14 @@ class CheckinRepository {
     }
   }
 
-  Future<Either<Failure, WorkDay>> getWorkDays(
+  Future<Either<Failure, WorkTime>> getWorkTime(
     DateTime startDate,
     DateTime endDate,
     int employeeId,
   ) async {
     try {
       final result =
-          await checkinDatasource.getWorkDays(startDate, endDate, employeeId);
+          await checkinDatasource.getWorkTime(startDate, endDate, employeeId);
       return Right(result);
     } on DioException catch (e) {
       final exception = NetworkException.getDioException(e);

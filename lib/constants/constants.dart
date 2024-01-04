@@ -1,5 +1,6 @@
 class Constants {
   static const String appName = 'Flutter Demo';
+  static const double sufficientWorkingHours = 8;
   static String getPunishmentHours(double punishmentHours) {
     if (punishmentHours == 0) {
       return '0';

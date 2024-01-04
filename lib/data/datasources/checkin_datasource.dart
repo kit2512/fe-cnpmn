@@ -32,7 +32,7 @@ class CheckinDatasource {
         .toList();
   }
 
-  Future<WorkDay> getWorkDays(
+  Future<WorkTime> getWorkTime(
       DateTime startDate, DateTime endDate, int? employeeId) async {
     final startTime = DateFormat('yyyy-MM-dd').format(startDate);
     final endTime = DateFormat('yyyy-MM-dd').format(endDate);
@@ -47,13 +47,7 @@ class CheckinDatasource {
     );
 
     final data = response.data as Map<String, dynamic>;
-    final workDays =
-        (data['work_days'] as List<dynamic>).first as Map<String, dynamic>;
-    // ignore: cascade_invocations
-    workDays.addAll({
-      'punishment_hours': data['punishment_hours'],
-    });
-
-    return WorkDay.fromJson(workDays);
+ 
+    return WorkTime.fromJson(data);
   }
 }

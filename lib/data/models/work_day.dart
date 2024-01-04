@@ -8,7 +8,7 @@ class WorkDay {
     required this.startTime,
     required this.endTime,
     required this.totalHours,
-    required this.punishmentHours,
+    required this.date,
   });
 
   factory WorkDay.fromJson(Map<String, dynamic> json) =>
@@ -17,7 +17,7 @@ class WorkDay {
   final String startTime;
   final String endTime;
   final double totalHours;
-  final double punishmentHours;
+  final String date;
 
   WorkDay copyWith({
     String? startTime,
@@ -29,6 +29,26 @@ class WorkDay {
         startTime: startTime ?? this.startTime,
         endTime: endTime ?? this.endTime,
         totalHours: totalHours ?? this.totalHours,
-        punishmentHours: punishmentHours ?? this.punishmentHours,
+        date: date,
       );
+}
+
+@JsonSerializable()
+class WorkTime {
+  const WorkTime({
+    required this.startDate,
+    required this.endDate,
+    required this.totalHours,
+    required this.punishmentHours,
+    required this.workDays,
+  });
+
+  factory WorkTime.fromJson(Map<String, dynamic> json) =>
+      _$WorkTimeFromJson(json);
+
+  final String startDate;
+  final String endDate;
+  final double totalHours;
+  final double punishmentHours;
+  final List<WorkDay> workDays;
 }
