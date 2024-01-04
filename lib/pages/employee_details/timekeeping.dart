@@ -265,7 +265,13 @@ class TimekeepingState extends State<Timekeeping> {
               height: 16,
             ),
             Text(
-              'Phạt: ${Constants.getPunishmentHours(currentWorkMonth?.punishmentHours ?? 0)}',
+              'Lương: ${Constants.getSalary(currentWorkMonth?.paidAmount ?? 0)} VNĐ',
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Text(
+              'Phạt: ${Constants.getPunishmentHours(currentWorkMonth?.punishmentHours ?? 0)} VND',
             ),
           ],
         ),

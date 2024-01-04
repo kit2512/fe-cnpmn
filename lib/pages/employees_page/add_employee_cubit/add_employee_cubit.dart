@@ -31,6 +31,7 @@ class AddEmployeeCubit extends Cubit<AddEmployeeState> {
       username: state.username.value,
       password: state.password.value,
       role: state.role,
+      salary: state.salary,
     );
     failureOrResponse.fold(
       (failure) => emit(
@@ -76,6 +77,12 @@ class AddEmployeeCubit extends Cubit<AddEmployeeState> {
   void roleChanged(UserRole? value) => emit(
         state.copyWith(
           role: value,
+        ),
+      );
+
+  void salaryChanged(int value) => emit(
+        state.copyWith(
+          salary: value,
         ),
       );
 }

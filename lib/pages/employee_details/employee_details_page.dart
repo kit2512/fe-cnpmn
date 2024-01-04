@@ -1,3 +1,4 @@
+import 'package:fe_cnpmn/constants/constants.dart';
 import 'package:fe_cnpmn/data/repositories/employee_repository.dart';
 import 'package:fe_cnpmn/dependency_injection.dart';
 import 'package:fe_cnpmn/pages/employee_details/blocs/employee_details_bloc/employee_details_cubit.dart';
@@ -181,6 +182,22 @@ class _EmployeeDetailsView extends StatelessWidget {
                           ),
                           Text(
                             state.details!.user.username,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            'Salary: ',
+                          ),
+                          Text(
+                            '${Constants.getSalary(state.details!.salary)} VND/h',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                             ),

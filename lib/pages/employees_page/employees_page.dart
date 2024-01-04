@@ -1,3 +1,4 @@
+import 'package:fe_cnpmn/constants/constants.dart';
 import 'package:fe_cnpmn/dependency_injection.dart';
 import 'package:fe_cnpmn/enums/user_role_enum.dart';
 import 'package:fe_cnpmn/pages/employee_details/employee_details_page.dart';
@@ -51,7 +52,8 @@ class _EmployeesPageView extends StatelessWidget {
               ),
             ),
             ElevatedButton.icon(
-              onPressed: () => context.read<EmployeesCubit>().getEmployees(refresh: true),
+              onPressed: () =>
+                  context.read<EmployeesCubit>().getEmployees(refresh: true),
               label: const Text(
                 'Refresh',
                 style: TextStyle(color: Colors.white),
@@ -62,7 +64,8 @@ class _EmployeesPageView extends StatelessWidget {
               ),
             ),
             ElevatedButton.icon(
-              onPressed: () => Navigator.of(context).pushReplacementNamed('/login'),
+              onPressed: () =>
+                  Navigator.of(context).pushReplacementNamed('/login'),
               icon: Icon(Icons.logout_rounded),
               label: Text('Log out'),
             ),
@@ -102,7 +105,8 @@ class _EmployeesPageView extends StatelessWidget {
               child: DataTable(
                 showCheckboxColumn: false,
                 showBottomBorder: true,
-                headingRowColor: MaterialStatePropertyAll<Color>(Colors.blue[200]!),
+                headingRowColor:
+                    MaterialStatePropertyAll<Color>(Colors.blue[200]!),
                 columns: const [
                   DataColumn(
                     label: Text('ID'),
@@ -115,6 +119,9 @@ class _EmployeesPageView extends StatelessWidget {
                   ),
                   DataColumn(
                     label: Text('Last name'),
+                  ),
+                  DataColumn(
+                    label: Text('Salary'),
                   ),
                   DataColumn(
                     label: Text('Role'),
@@ -143,6 +150,11 @@ class _EmployeesPageView extends StatelessWidget {
                           ),
                           DataCell(
                             Text(emp.user.lastName),
+                          ),
+                          DataCell(
+                            Text(
+                              '${Constants.getSalary(emp.salary)} VND',
+                            ),
                           ),
                           DataCell(
                             Text(emp.user.role.translationName),

@@ -41,11 +41,12 @@ class WorkTime {
     required this.totalHours,
     required this.punishmentHours,
     required this.workDays,
+    required this.paidAmount,
   });
 
   factory WorkTime.fromJson(Map<String, dynamic> json) =>
       _$WorkTimeFromJson(json);
-
+  final int paidAmount;
   final String startDate;
   final String endDate;
   final double totalHours;

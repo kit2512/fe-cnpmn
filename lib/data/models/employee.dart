@@ -8,7 +8,6 @@ part 'employee.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class Employee {
-
   Employee({
     required this.id,
     required this.userId,
@@ -16,16 +15,18 @@ class Employee {
     required this.checkinHistory,
     required this.allowedRooms,
     this.card,
+    required this.salary,
   });
 
   final RfidCard? card;
   final int id;
   final int userId;
   final UserInfo user;
+  final int salary;
   final List<CheckinHistory> checkinHistory;
   final List<Room> allowedRooms;
-  factory Employee.fromJson(Map<String, dynamic> json) => _$EmployeeFromJson(json);
-
+  factory Employee.fromJson(Map<String, dynamic> json) =>
+      _$EmployeeFromJson(json);
 
   Map<String, dynamic> toJson() => _$EmployeeToJson(this);
 }

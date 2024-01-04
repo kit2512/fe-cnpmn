@@ -24,6 +24,7 @@ WorkTime _$WorkTimeFromJson(Map<String, dynamic> json) => WorkTime(
       startDate: json['start_date'] as String,
       endDate: json['end_date'] as String,
       totalHours: (json['total_hours'] as num).toDouble(),
+      paidAmount: json['paid_amount'] as int,
       punishmentHours: (json['punishment_hours'] as num).toDouble(),
       workDays: (json['work_days'] as List<dynamic>)
           .map((e) => WorkDay.fromJson(e as Map<String, dynamic>))
@@ -36,4 +37,5 @@ Map<String, dynamic> _$WorkTimeToJson(WorkTime instance) => <String, dynamic>{
       'total_hours': instance.totalHours,
       'punishment_hours': instance.punishmentHours,
       'work_days': instance.workDays,
+      'paid_amount': instance.paidAmount,
     };
