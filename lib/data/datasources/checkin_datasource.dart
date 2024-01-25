@@ -27,13 +27,10 @@ class CheckinDatasource {
       '/checkin/history',
       queryParameters: data,
     );
-    return response.data!
-        .map((e) => CheckinHistory.fromJson(e as Map<String, dynamic>))
-        .toList();
+    return response.data!.map((e) => CheckinHistory.fromJson(e as Map<String, dynamic>)).toList();
   }
 
-  Future<WorkTime> getWorkTime(
-      DateTime startDate, DateTime endDate, int? employeeId) async {
+  Future<WorkTime> getWorkTime(DateTime startDate, DateTime endDate, int? employeeId) async {
     final startTime = DateFormat('yyyy-MM-dd').format(startDate);
     final endTime = DateFormat('yyyy-MM-dd').format(endDate);
 
@@ -47,7 +44,24 @@ class CheckinDatasource {
     );
 
     final data = response.data as Map<String, dynamic>;
- 
+
     return WorkTime.fromJson(data);
+  }
+
+  Future<void> deleteDayOff(int id) => dioClient.sendRequest.delete<dynamic>(
+        '/days_off/$id',
+      );
+
+  Future<void> sendSalaryEmail(int employeeId, DateTime startDate, DateTime endDate) async {
+    final startTime = DateFormat('yyyy-MM-dd').format(startDate);
+    final endTime = DateFormat('yyyy-MM-dd').format(endDate);
+
+    await dioClient.sendRequest.post<dynamic>(
+      '/employees/$employeeId/salary_email',
+      queryParameters: {
+        'start_date': startTime,
+        'end_date': endTime,
+      },
+    );
   }
 }

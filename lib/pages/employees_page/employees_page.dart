@@ -33,7 +33,7 @@ class _EmployeesPageView extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Manage Employees'),
           actions: [
-            TextButton.icon(
+            ElevatedButton.icon(
               onPressed: () => showDialog<bool?>(
                 context: context,
                 builder: (context) => const AddEmployeeDialog(),
@@ -44,28 +44,22 @@ class _EmployeesPageView extends StatelessWidget {
               }),
               icon: const Icon(
                 Icons.add_rounded,
-                color: Colors.white,
               ),
               label: const Text(
                 'Add',
-                style: TextStyle(color: Colors.white),
               ),
             ),
             ElevatedButton.icon(
-              onPressed: () =>
-                  context.read<EmployeesCubit>().getEmployees(refresh: true),
+              onPressed: () => context.read<EmployeesCubit>().getEmployees(refresh: true),
               label: const Text(
                 'Refresh',
-                style: TextStyle(color: Colors.white),
               ),
               icon: const Icon(
                 Icons.refresh,
-                color: Colors.white,
               ),
             ),
             ElevatedButton.icon(
-              onPressed: () =>
-                  Navigator.of(context).pushReplacementNamed('/login'),
+              onPressed: () => Navigator.of(context).pushReplacementNamed('/login'),
               icon: Icon(Icons.logout_rounded),
               label: Text('Log out'),
             ),
@@ -105,8 +99,7 @@ class _EmployeesPageView extends StatelessWidget {
               child: DataTable(
                 showCheckboxColumn: false,
                 showBottomBorder: true,
-                headingRowColor:
-                    MaterialStatePropertyAll<Color>(Colors.blue[200]!),
+                headingRowColor: MaterialStatePropertyAll<Color>(Colors.blue[200]!),
                 columns: const [
                   DataColumn(
                     label: Text('ID'),

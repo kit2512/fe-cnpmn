@@ -36,6 +36,7 @@ class EmployeeRepository {
     required String password,
     required UserRole role,
     required int salary,
+    required String email,
   }) async {
     try {
       final result = await employeeDatasource.createEmployee(
@@ -45,6 +46,7 @@ class EmployeeRepository {
         password: password,
         role: role,
         salary: salary,
+        email: email,
       );
       return Right(result);
     } on DioException catch (e) {

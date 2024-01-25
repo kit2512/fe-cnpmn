@@ -1,3 +1,4 @@
+import 'package:fe_cnpmn/data/models/day_off_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'work_day.g.dart';
@@ -9,6 +10,7 @@ class WorkDay {
     required this.endTime,
     required this.totalHours,
     required this.date,
+    this.dayOff,
   });
 
   factory WorkDay.fromJson(Map<String, dynamic> json) =>
@@ -18,18 +20,22 @@ class WorkDay {
   final String endTime;
   final double totalHours;
   final String date;
+  final DayOffModel? dayOff;
 
   WorkDay copyWith({
     String? startTime,
     String? endTime,
     double? totalHours,
     double? punishmentHours,
+    String? date,
+    DayOffModel? dayOff,
   }) =>
       WorkDay(
         startTime: startTime ?? this.startTime,
         endTime: endTime ?? this.endTime,
         totalHours: totalHours ?? this.totalHours,
-        date: date,
+        date: date ?? this.date,
+        dayOff: dayOff ?? this.dayOff,
       );
 }
 

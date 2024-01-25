@@ -32,6 +32,7 @@ class AddEmployeeCubit extends Cubit<AddEmployeeState> {
       password: state.password.value,
       role: state.role,
       salary: state.salary,
+      email: state.email,
     );
     failureOrResponse.fold(
       (failure) => emit(

@@ -41,9 +41,32 @@ class CheckinRepository {
     int employeeId,
   ) async {
     try {
-      final result =
-          await checkinDatasource.getWorkTime(startDate, endDate, employeeId);
+      final result = await checkinDatasource.getWorkTime(startDate, endDate, employeeId);
       return Right(result);
+    } on DioException catch (e) {
+      final exception = NetworkException.getDioException(e);
+      return Left(NetworkFailure(exception));
+    } catch (_) {
+      return Left(NetworkFailure(const NetworkException.unexpectedError()));
+    }
+  }
+
+  Future<Either<Failure, void>> deleteDayOff(int id) async {
+    try {
+      final result = checkinDatasource.deleteDayOff(id);
+      return const Right(null);
+    } on DioException catch (e) {
+      final exception = NetworkException.getDioException(e);
+      return Left(NetworkFailure(exception));
+    } catch (_) {
+      return Left(NetworkFailure(const NetworkException.unexpectedError()));
+    }
+  }
+
+  Future<Either<Failure, void>> sendSalaryEmail(int employeeId, DateTime startDate, DateTime endDate)async {
+    try {
+      final result = checkinDatasource.sendSalaryEmail(employeeId, startDate, endDate);
+      return const Right(null);
     } on DioException catch (e) {
       final exception = NetworkException.getDioException(e);
       return Left(NetworkFailure(exception));

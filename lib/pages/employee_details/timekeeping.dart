@@ -1,4 +1,5 @@
 import 'package:fe_cnpmn/constants/constants.dart';
+import 'package:fe_cnpmn/data/models/day_off_model.dart';
 import 'package:fe_cnpmn/data/models/work_day.dart';
 import 'package:fe_cnpmn/data/repositories/checkin_history_repository.dart';
 import 'package:fe_cnpmn/dependency_injection.dart';
@@ -6,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:formz/formz.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
+
+import 'create_day_off_dialog.dart';
 
 class Timekeeping extends StatefulWidget {
   const Timekeeping({
@@ -30,6 +33,7 @@ class TimekeepingState extends State<Timekeeping> {
 
   @override
   void initState() {
+    super.initState();
     currentDay = DateTime.now();
     focusedDay = DateTime.now();
     selectedDay = DateTime.now();
@@ -37,8 +41,6 @@ class TimekeepingState extends State<Timekeeping> {
       DateTime.utc(currentDay.year, currentDay.month, 1),
       DateTime.utc(currentDay.year, currentDay.month + 1, 0),
     );
-
-    super.initState();
   }
 
   FormzSubmissionStatus _status = FormzSubmissionStatus.initial;
@@ -69,6 +71,41 @@ class TimekeepingState extends State<Timekeeping> {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: const Text('Timekeeping'),
+          actions: [
+            FilledButton(
+              onPressed: () {
+                showDialog<bool>(
+                  context: context,
+                  builder: (context) => CreateDayOffDialog(
+                    employeeId: widget.employeeId,
+                  ),
+                ).then((value) {
+                  if (value == true) {
+                    _getWorkMonth(
+                      DateTime.utc(focusedDay.year, focusedDay.month, 1),
+                      DateTime.utc(
+                        focusedDay.year,
+                        focusedDay.month + 1,
+                        0,
+                      ),
+                    );
+                  }
+                });
+              },
+              child: Text('Tạo đơn nghỉ'),
+            ),
+            const SizedBox(
+              width: 12,
+            ),
+            SendPaySlipButton(
+              employeeId: widget.employeeId,
+              startDate: DateTime.utc(currentDay.year, currentDay.month, 1),
+              endDate: DateTime.utc(currentDay.year, currentDay.month + 1, 0),
+            ),
+            const SizedBox(
+              width: 12,
+            ),
+          ],
         ),
         body: Row(
           children: [
@@ -132,15 +169,13 @@ class TimekeepingState extends State<Timekeeping> {
                     color: Colors.black54,
                   ),
                 ),
-                calendarBuilders:
-                    CalendarBuilders(markerBuilder: (context, day, events) {
+                calendarBuilders: CalendarBuilders(markerBuilder: (context, day, events) {
                   // tìm ra event có ngày bằng với ngày hiện tại
                   final WorkDay? event = _getEventsForDay(day).firstOrNull;
                   if (event == null) {
                     return Container();
                   }
-                  final hasSufficientWorkingHours =
-                      (event.totalHours) >= Constants.sufficientWorkingHours;
+                  final hasSufficientWorkingHours = (event.totalHours) >= Constants.sufficientWorkingHours;
 
                   return Align(
                     alignment: Alignment.bottomCenter,
@@ -148,9 +183,7 @@ class TimekeepingState extends State<Timekeeping> {
                       margin: const EdgeInsets.only(bottom: 2),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: hasSufficientWorkingHours
-                            ? Colors.blue
-                            : Colors.red,
+                        color: hasSufficientWorkingHours ? Colors.blue : Colors.red,
                       ),
                       width: 8,
                       height: 8,
@@ -305,8 +338,161 @@ class TimekeepingState extends State<Timekeeping> {
           Text(
             'Tổng thời gian làm việc: ${events?.totalHours ?? '0'} giờ',
           ),
+          if (events?.dayOff != null) ...[
+            const SizedBox(
+              height: 16,
+            ),
+            Text(
+              'Thông tin nghỉ phép:',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(
+              height: 12,
+            ),
+            Text(
+              'Loại nghỉ: ${events?.dayOff?.type.title ?? ''}',
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Text(
+              'Lý do nghỉ: ${events?.dayOff?.reason ?? ''}',
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Row(
+              children: [
+                FilledButton.tonal(
+                  onPressed: () {
+                    showDialog<bool>(
+                      context: context,
+                      builder: (context) => CreateDayOffDialog(
+                        dayOff: events!.dayOff,
+                      ),
+                    ).then((value) {
+                      if (value != null) {
+                        _getWorkMonth(
+                          DateTime.utc(focusedDay.year, focusedDay.month, 1),
+                          DateTime.utc(
+                            focusedDay.year,
+                            focusedDay.month + 1,
+                            0,
+                          ),
+                        );
+                      }
+                    });
+                  },
+                  child: Text('Chỉnh sửa'),
+                ),
+                const SizedBox(
+                  width: 16,
+                ),
+                FilledButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.red),
+                  ),
+                  onPressed: () async {
+                    final response = await checkinRepository.deleteDayOff(events!.dayOff!.id!);
+                    response.fold(
+                      (l) => ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Xóa đơn nghỉ không thành công'),
+                        ),
+                      ),
+                      (r) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Xóa đơn nghỉ thành công'),
+                          ),
+                        );
+                        _getWorkMonth(
+                          DateTime.utc(focusedDay.year, focusedDay.month, 1),
+                          DateTime.utc(
+                            focusedDay.year,
+                            focusedDay.month + 1,
+                            0,
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  child: Text('Xóa'),
+                ),
+              ],
+            ),
+          ]
         ],
       ),
     );
   }
+}
+
+class SendPaySlipButton extends StatefulWidget {
+  const SendPaySlipButton({
+    super.key,
+    required this.employeeId,
+    required this.startDate,
+    required this.endDate,
+  });
+
+  final int employeeId;
+  final DateTime startDate;
+  final DateTime endDate;
+
+  @override
+  State<SendPaySlipButton> createState() => _SendPaySlipButtonState();
+}
+
+class _SendPaySlipButtonState extends State<SendPaySlipButton> {
+  FormzSubmissionStatus status = FormzSubmissionStatus.initial;
+  String? errorMessage;
+
+  final CheckinRepository checkinRepository = getIt<CheckinRepository>();
+
+  Future<void> sendPayslipEmail() async {
+    setState(() {
+      status = FormzSubmissionStatus.inProgress;
+      errorMessage = null;
+    });
+    final failureOrResponse = await checkinRepository.sendSalaryEmail(
+      widget.employeeId,
+      widget.startDate,
+      widget.endDate,
+    );
+    failureOrResponse.fold(
+      (l) {
+        setState(() {
+          status = FormzSubmissionStatus.failure;
+          errorMessage = l.toString();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(errorMessage ?? 'Something went wrong'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        });
+      },
+      (r) => setState(() {
+        status = FormzSubmissionStatus.success;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Gửi phiếu lương thành công'),
+          ),
+        );
+      }),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) => FilledButton.tonal(
+        onPressed: status.isInProgress ? null : sendPayslipEmail,
+        child: status.isInProgress
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : const Text('Gửi phiếu lương'),
+      );
 }

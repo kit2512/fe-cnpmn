@@ -1,7 +1,6 @@
 import 'package:fe_cnpmn/data/models/rfid_machine.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'checkin_history.dart';
 import 'employee.dart';
 
 part 'room.g.dart';

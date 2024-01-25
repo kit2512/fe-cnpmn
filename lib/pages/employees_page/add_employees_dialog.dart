@@ -74,7 +74,12 @@ class _AddEmployeeDialogView extends StatelessWidget {
               SizedBox(
                 height: 12.0,
               ),
+              _EmailField(),
+              SizedBox(
+                height: 12.0,
+              ),
               _RolePicker(),
+
             ],
           ),
           actions: [
@@ -154,6 +159,29 @@ class _UsernameField extends StatelessWidget {
               (state.username.isNotValid && state.username.error != null)
                   ? Name.getError(state.username.error!)
                   : null,
+          onChanged: context.read<AddEmployeeCubit>().usernameChanged,
+          labelText: 'Username',
+          initialValue: state.username.value,
+        ),
+      );
+}
+
+
+class _EmailField extends StatelessWidget {
+  const _EmailField();
+
+  @override
+  Widget build(BuildContext context) =>
+      BlocBuilder<AddEmployeeCubit, AddEmployeeState>(
+        buildWhen: (prev, current) =>
+        prev.creationStatus != current.creationStatus ||
+            prev.username != current.username,
+        builder: (context, state) => NameInput(
+          enabled: !state.creationStatus.isInProgress,
+          validator: (_) =>
+          (state.username.isNotValid && state.username.error != null)
+              ? Name.getError(state.username.error!)
+              : null,
           onChanged: context.read<AddEmployeeCubit>().usernameChanged,
           labelText: 'Username',
           initialValue: state.username.value,

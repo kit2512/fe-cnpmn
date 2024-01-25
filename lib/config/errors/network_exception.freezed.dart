@@ -191,7 +191,7 @@ class _$RequestCancelledImpl implements RequestCancelled {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$RequestCancelledImpl);
   }
@@ -401,7 +401,7 @@ class _$UnauthorizedRequestImpl implements UnauthorizedRequest {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UnauthorizedRequestImpl &&
@@ -626,7 +626,7 @@ class _$BadRequestImpl implements BadRequest {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BadRequestImpl &&
@@ -849,7 +849,7 @@ class _$NotFoundImpl implements NotFound {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$NotFoundImpl &&
@@ -1054,7 +1054,7 @@ class _$MethodNotAllowedImpl implements MethodNotAllowed {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$MethodNotAllowedImpl);
   }
@@ -1246,7 +1246,7 @@ class _$NotAcceptableImpl implements NotAcceptable {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$NotAcceptableImpl);
   }
@@ -1438,7 +1438,7 @@ class _$RequestTimeoutImpl implements RequestTimeout {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$RequestTimeoutImpl);
   }
@@ -1630,7 +1630,7 @@ class _$SendTimeoutImpl implements SendTimeout {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$SendTimeoutImpl);
   }
@@ -1822,7 +1822,7 @@ class _$ConflictImpl implements Conflict {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$ConflictImpl);
   }
@@ -2014,7 +2014,7 @@ class _$InternalServerErrorImpl implements InternalServerError {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$InternalServerErrorImpl);
@@ -2207,7 +2207,7 @@ class _$NotImplementedImpl implements NotImplemented {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$NotImplementedImpl);
   }
@@ -2399,7 +2399,7 @@ class _$ServiceUnavailableImpl implements ServiceUnavailable {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$ServiceUnavailableImpl);
   }
@@ -2591,7 +2591,7 @@ class _$NoInternetConnectionImpl implements NoInternetConnection {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$NoInternetConnectionImpl);
@@ -2784,7 +2784,7 @@ class _$FormatExceptionImpl implements FormatException {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$FormatExceptionImpl);
   }
@@ -2976,7 +2976,7 @@ class _$UnableToProcessImpl implements UnableToProcess {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$UnableToProcessImpl);
   }
@@ -3186,7 +3186,7 @@ class _$DefaultErrorImpl implements DefaultError {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DefaultErrorImpl &&
@@ -3391,7 +3391,7 @@ class _$UnexpectedErrorImpl implements UnexpectedError {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$UnexpectedErrorImpl);
   }

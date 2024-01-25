@@ -225,11 +225,11 @@ class _EmployeeDetailsView extends StatelessWidget {
                     ],
                   ),
                   const Spacer(),
-                  ElevatedButton.icon(
+                  FilledButton.icon(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,
                     ),
-                    icon: const Icon(Icons.delete),
+                    icon: const Icon(Icons.delete, color: Colors.white,),
                     label: const Text('Delete'),
                     onPressed: () {
                       showDialog<bool?>(
@@ -263,12 +263,12 @@ class _EmployeeDetailsView extends StatelessWidget {
                   const SizedBox(
                     width: 8,
                   ),
-                  ElevatedButton.icon(
+                  FilledButton.icon(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.pink[200],
                     ),
-                    icon: const Icon(Icons.calendar_month),
-                    label: const Text('Timekeeping'),
+                    icon: const Icon(Icons.calendar_month, color: Colors.white,),
+                    label: const Text('Timekeeping', style: TextStyle(color: Colors.white,),),
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(

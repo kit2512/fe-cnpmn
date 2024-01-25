@@ -14,8 +14,7 @@ class UserInfo {
     required this.role,
   });
 
-  factory UserInfo.fromJson(Map<String, dynamic> json) =>
-      _$UserInfoFromJson(json);
+  factory UserInfo.fromJson(Map<String, dynamic> json) => _$UserInfoFromJson(json);
 
   final int id;
   final String firstName;

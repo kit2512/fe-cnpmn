@@ -10,6 +10,7 @@ class AddEmployeeState extends Equatable with FormzMixin {
     required this.salary,
     required this.creationStatus,
     required this.errorMessage,
+    required this.email,
   });
 
   factory AddEmployeeState.initial() => const AddEmployeeState(
@@ -21,6 +22,7 @@ class AddEmployeeState extends Equatable with FormzMixin {
         salary: 0,
         creationStatus: FormzSubmissionStatus.initial,
         errorMessage: '',
+        email: '',
       );
 
   final Name firstName;
@@ -28,6 +30,7 @@ class AddEmployeeState extends Equatable with FormzMixin {
   final Name username;
   final Password password;
   final UserRole role;
+  final String email;
   final FormzSubmissionStatus creationStatus;
   final String? errorMessage;
   final int salary;
@@ -51,6 +54,7 @@ class AddEmployeeState extends Equatable with FormzMixin {
         salary: salary ?? this.salary,
         creationStatus: creationStatus ?? this.creationStatus,
         errorMessage: errorMessage ?? this.errorMessage,
+        email: email,
       );
 
   @override
@@ -63,6 +67,7 @@ class AddEmployeeState extends Equatable with FormzMixin {
         creationStatus,
         errorMessage,
         salary,
+        email,
       ];
 
   @override
